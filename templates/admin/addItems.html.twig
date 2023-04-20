@@ -1,0 +1,922 @@
+{{ include('base.html.twig') }}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}New Item{% endblock %}</title>
+{#        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">#}
+{#        <link rel="icon" href="{{ absolute_url(asset('images/favicon.ico')) }}" />#}
+        <script src="https://kit.fontawesome.com/678bd8a445.js" crossorigin="anonymous"></script>
+        <style>
+
+            body{
+                font-family: 'Abel';font-size: 22px;
+            }
+
+            h2{
+                text-align: center;
+                margin-top: 0;
+            }
+
+            #item div{
+                margin-bottom: 2%;
+            }
+
+            #item_details{
+                border: solid 2px rgba(225, 230, 235, 1);
+                padding: 2%;
+            }
+
+            #item_details div{
+                text-align: center;
+            }
+
+            #item_details label{
+                font-size:1.2rem;
+            }
+
+            #item_details input{
+                font-size:1.2rem;
+            }
+
+            #item_details p{
+                margin-bottom: 0;
+            }
+
+            #category_row div{
+                width:33%;
+                text-align: center;
+            }
+
+            #item_category{
+                border: solid 2px rgba(225, 230, 235, 1);
+                padding: 2%;
+            }
+
+            #item_category img{
+                width: 40%;
+                cursor: pointer;
+            }
+
+            #category_row{
+                display: inline-flex;
+                justify-content: space-evenly;
+                width: 100%;
+            }
+
+            #category_row p{
+                font-size: 2.5rem;
+            }
+
+            #item_colours{
+                border: solid 2px rgba(225, 230, 235, 1);
+                padding: 2%;
+            }
+
+            #item_colours span{
+                padding: 4%;
+                display: inline-flex;
+                border: solid black 1px;
+                border-radius: 50%;
+                cursor: pointer;
+            }
+
+            #colour_row{
+                justify-content: space-around;
+                display: flex;
+                width: 80%;
+                margin: auto;
+            }
+
+            #item_types{
+                border: solid 2px rgba(225, 230, 235, 1);
+                padding: 2%;
+            }
+
+            #item_types img{
+                width: 8%;
+                cursor: pointer;
+                display: inline-flex;
+            }
+
+            #row1{
+                display: flex;
+                justify-content: space-evenly;
+                margin-bottom: 2%;
+            }
+
+            #row2{
+                display: flex;
+                justify-content: space-evenly;
+            }
+
+            #row{
+                justify-content: space-evenly;
+                display: flex;
+                width: 60%;
+                margin: auto;
+            }
+
+            #item_gender{
+                border: solid 2px rgba(225, 230, 235, 1);
+                padding: 2%;
+            }
+
+            #item_gender span{
+                display: inline-flex;
+                font-size: 2.5rem;
+                border-radius: 1%;
+                cursor: pointer;
+                color: white;
+                background: dodgerblue;
+                padding: 2%;
+                border: dodgerblue;
+            }
+
+            #item_brand{
+                border: solid 2px rgba(225, 230, 235, 1);
+                padding: 2%;
+            }
+
+            #brand_row1{
+                justify-content: space-evenly;
+                display: flex;
+                margin-bottom: 2%;
+            }
+
+            #brand_row2{
+                justify-content: space-evenly;
+                display: flex;
+            }
+
+            #item_brand img{
+                width: 15%;
+                border: solid 2px black;
+                border-radius: 50%;
+                cursor: pointer;
+                display: inline-flex;
+            }
+
+            #item_images{
+                border: solid 2px rgba(225, 230, 235, 1);
+                padding: 2%;
+            }
+
+            #images_row{
+                display: flex;
+                justify-content: center;
+            }
+
+            #upload_image{
+                display: block;
+                margin: auto;
+                margin-top: 3%!important;
+                font-size: 2rem;
+                padding: 2%;
+                background: green;
+                border: green;
+                cursor: pointer;
+                border-radius: 4%;
+                color: white;
+            }
+
+        </style>
+        <body>
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+{#        {% block stylesheets %}#}
+{#            {{ encore_entry_link_tags('app') }}#}
+{#        {% endblock %}#}
+
+
+{#        <form method="post" action="{{ path('add_items') }}" >#}
+        <form action="{{ path('add_images') }}" method="post" enctype="multipart/form-data">
+            <div id="item">
+
+                <div id="item_details">
+                    <h2>Item Details:</h2>
+                    <div id="item_name">
+                        <label for="item_name">Item Name:</label>
+                        <input type="text" id="_itemName" name="_itemName">
+                    </div>
+
+                    <div id="item_price">
+                        <label for="item_price">Item Price:</label>
+                        <input type="text" id="_itemPrice" name="_itemPrice">
+                    </div>
+
+                    <div id="item_collection">
+                        <label for="item_collection">Item Collection:</label>
+                        <input type="text" id="_itemColl" name="_itemColl">
+                    </div>
+
+                    <div id="item_material">
+                        <label for="item_material"><p>Item Material:</p></label>
+                        <textarea id="_itemMaterial" name="_itemMaterial" style="width:30%; height:2rem;"></textarea>
+                    </div>
+
+                    <div id="item_description">
+                        <label for="item_description"><p>Item Description:</p></label>
+                        <textarea id="_itemDesc" name="_itemDesc" style="width: 35%; height: 7rem;"></textarea>
+                    </div>
+
+                </div>
+
+                <div id="item_category">
+                    <h2>Item Category:</h2>
+                    <div id="category_row">
+                        <div id="clothing">
+                            <img src="{{ absolute_url(asset('images/hoodie.png')) }}" id="clothing_img" onclick="cat_clothing()"/>
+                            <p>Clothing</p>
+                        </div>
+                        <div id="footwear">
+                            <img src="{{ absolute_url(asset('images/sneaker2.png')) }}" id="footwear_img" onclick="cat_footwear()"/>
+                            <p>Footwear</p>
+                        </div>
+                        <div id="accessory">
+                            <img src="{{ absolute_url(asset('images/accessory.png')) }}" id="accessory_img" onclick="cat_accessory()"/>
+                            <p>Accessories</p>
+                        </div>
+                    </div>
+                    <input type="hidden" id="_itemCategory" name="_itemCategory" value="">
+                </div>
+
+                <div id="item_colours">
+                    <h2>Item Colour:</h2>
+                    <div id="colour_row">
+                        <span id="red" style="background: red;" onclick="colourRed()"></span>
+                        <span id="blue"style="background: blue;" onclick="colourBlue()"></span>
+                        <span id="green"style="background: green;" onclick="colourGreen()"></span>
+                        <span id="black"style="background: black;" onclick="colourBlack()"></span>
+                        <span id="white"style="background: White;" onclick="colourWhite()"></span>
+                        <span id="orange"style="background: Orange;" onclick="colourOrange()"></span>
+                        <span id="yellow"style="background: Yellow;" onclick="colourYellow()"></span>
+                        <span id="purple"style="background: Purple;" onclick="colourPurple()"></span>
+                        <span id="pink"style="background: Pink;" onclick="colourPink()"></span>
+                    </div>
+                    <input type="hidden" id="_itemColour" name="_itemColour" value="">
+                </div>
+
+                <div id="item_types">
+                    <h2>Item Type:</h2>
+                    <div id="row1">
+                        <img src="{{ absolute_url(asset('images/hoodie.png')) }}" id="hoodie" style="" onclick="typeHoodie()"/>
+                        <img src="{{ absolute_url(asset('images/shirt.png')) }}"id="tShirt" style="" onclick="typeTShirt()"/>
+                        <img src="{{ absolute_url(asset('images/tracksuit.png')) }}"id="tracksuit" style="" onclick="typeTracksuit()"/>
+                        <img src="{{ absolute_url(asset('images/shorts.png')) }}"id="shorts" style="" onclick="typeShorts()"/>
+                        <img src="{{ absolute_url(asset('images/trainers.png')) }}"id="trainers" style="" onclick="typeTrainers()"/>
+                        <img src="{{ absolute_url(asset('images/hiTops.png')) }}"id="hiTops" style="" onclick="typeHiTops()"/>
+                    </div>
+                    <div id="row2">
+                        <img src="{{ absolute_url(asset('images/runningShoes.jpg')) }}"id="running" style="" onclick="typeRunning()"/>
+                        <img src="{{ absolute_url(asset('images/boots.png')) }}"id="boots" style="" onclick="typeBoots()"/>
+                        <img src="{{ absolute_url(asset('images/boxers.png')) }}"id="underwear" style="" onclick="typeUnderwear()"/>
+                        <img src="{{ absolute_url(asset('images/socks.png')) }}"id="socks" style="" onclick="typeSocks()"/>
+                        <img src="{{ absolute_url(asset('images/cap.png')) }}"id="caps" style="" onclick="typeCap()"/>
+                        <img src="{{ absolute_url(asset('images/sunglasses.png')) }}"id="sunglasses" style="" onclick="typeSunglasses()"/>
+                    </div>
+                    <input type="hidden" id="_itemType" name="_itemType" value="">
+                </div>
+
+                <div id="item_gender">
+                    <h2>Item Gender:</h2>
+                    <div id="row">
+                        <span id="male" onclick="male()" >Male</span>
+                        <span id="unisex" onclick="unisex()" >Unisex</span>
+                        <span id="female" onclick="female()" >Female</span>
+                    </div>
+                    <input type="hidden" id="_itemGender" name="_itemGender" value="">
+                </div>
+
+                <div id="item_brand">
+                    <h2>Item Brand:</h2>
+                    <div id="brand_row1">
+
+                        <img src="{{ absolute_url(asset('images/nike.jpg')) }}"id="nike" onclick="brand_nike()"/>
+
+                        <img src="{{ absolute_url(asset('images/hoodrich.png')) }}"id="hoodrich" onclick="brand_hoodrich()"/>
+
+                        <img src="{{ absolute_url(asset('images/adidas.png')) }}"id="adidas" onclick="brand_adidas()"/>
+
+                        <img src="{{ absolute_url(asset('images/ea7.jpg')) }}"id="ea7" onclick="brand_ea7()"/>
+
+                        <img src="{{ absolute_url(asset('images/puma1.jpg')) }}"id="puma" onclick="brand_puma()"/>
+
+                    </div>
+                    <div id="brand_row2">
+
+                        <img src="{{ absolute_url(asset('images/lacoste.jpg')) }}"id="lacoste" onclick="brand_lacoste()"/>
+
+                        <img src="{{ absolute_url(asset('images/newBalance.jpg')) }}"id="new_balance" onclick="brand_newBalance()"/>
+
+                        <img src="{{ absolute_url(asset('images/northFace1.png')) }}"id="northFace" onclick="brand_northFace()"/>
+
+                        <img src="{{ absolute_url(asset('images/jordan.png')) }}"id="jordan" onclick="brand_jordan()"/>
+
+                        <img src="{{ absolute_url(asset('images/underArmour.jpg')) }}"id="under_armour" onclick="brand_underArmour()"/>
+                    </div>
+                    <input type="hidden" id="_itemBrand" name="_itemBrand" value="">
+                </div>
+
+{#                <div>#}
+{#                    <button name="addItemSubmit" type="submit" style="margin: auto;">Save</button>#}
+{#                </div>#}
+
+            </div>
+{#        </form>#}
+
+{#        <form action="{{ path('add_images') }}" method="post" enctype="multipart/form-data">#}
+            <div id="item_images">
+                <h2>Item Images:</h2>
+
+                <div id="images_row">
+                    <div id="image1">
+                        <p>Main Image:</p>
+                        <input type="file" name="fileToUpload" id="fileToUpload">
+                    </div>
+
+                    <div id="image2">
+                    <p>Second Image:</p>
+                    <input type="file" name="fileToUpload1" id="fileToUpload1">
+                    </div>
+
+                    <div id="image3">
+                    <p>Third Image:</p>
+                    <input type="file" name="fileToUpload2" id="fileToUpload2">
+                    </div>
+
+                    <div id="image4">
+                    <p>Fourth Image:</p>
+                    <input type="file" name="fileToUpload3" id="fileToUpload3">
+                    </div>
+                </div>
+            </div>
+            <input type="submit" name="upload_image" id="upload_image" value="SUBMIT">
+{#            <input type="hidden" name="user_id" value="{{ created_id }}">#}
+        </form>
+
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+
+        <script>
+
+            function cat_clothing(){
+                document.getElementById("_itemCategory").value = "CLOTHING";
+
+                document.getElementById("clothing").style.border = "solid 4px gray";
+
+                document.getElementById("footwear").style.border = "none";
+                document.getElementById("accessory").style.border = "none";
+            }
+
+            function cat_footwear(){
+                document.getElementById("_itemCategory").value = "FOOTWEAR";
+
+                document.getElementById("footwear").style.border = "solid 4px gray";
+
+                document.getElementById("clothing").style.border = "none";
+                document.getElementById("accessory").style.border = "none";
+            }
+
+            function cat_accessory(){
+                document.getElementById("_itemCategory").value = "ACCESSORIES";
+
+                document.getElementById("accessory").style.border = "solid 4px gray";
+
+                document.getElementById("clothing").style.border = "none";
+                document.getElementById("footwear").style.border = "none";
+            }
+
+            function colourRed(){
+                document.getElementById("_itemColour").value = "RED";
+
+                document.getElementById("red").style.border = "solid 4px gray";
+
+                document.getElementById("blue").style.border = "solid 1px black";
+                document.getElementById("green").style.border = "solid 1px black";
+                document.getElementById("black").style.border = "solid 1px black";
+                document.getElementById("white").style.border = "solid 1px black";
+                document.getElementById("orange").style.border = "solid 1px black";
+                document.getElementById("yellow").style.border = "solid 1px black";
+                document.getElementById("purple").style.border = "solid 1px black";
+                document.getElementById("pink").style.border = "solid 1px black";
+            }
+
+            function colourBlue(){
+                document.getElementById("_itemColour").value = "BLUE";
+
+                document.getElementById("blue").style.border = "solid 4px gray";
+
+                document.getElementById("red").style.border = "solid 1px black";
+                document.getElementById("green").style.border = "solid 1px black";
+                document.getElementById("black").style.border = "solid 1px black";
+                document.getElementById("white").style.border = "solid 1px black";
+                document.getElementById("orange").style.border = "solid 1px black";
+                document.getElementById("yellow").style.border = "solid 1px black";
+                document.getElementById("purple").style.border = "solid 1px black";
+                document.getElementById("pink").style.border = "solid 1px black";
+            }
+
+            function colourGreen(){
+                document.getElementById("_itemColour").value = "GREEN";
+
+                document.getElementById("green").style.border = "solid 4px gray";
+
+                document.getElementById("red").style.border = "solid 1px black";
+                document.getElementById("blue").style.border = "solid 1px black";
+                document.getElementById("black").style.border = "solid 1px black";
+                document.getElementById("white").style.border = "solid 1px black";
+                document.getElementById("orange").style.border = "solid 1px black";
+                document.getElementById("yellow").style.border = "solid 1px black";
+                document.getElementById("purple").style.border = "solid 1px black";
+                document.getElementById("pink").style.border = "solid 1px black";
+            }
+
+            function colourBlack(){
+                document.getElementById("_itemColour").value = "BLACK";
+
+                document.getElementById("black").style.border = "solid 4px gray";
+
+                document.getElementById("red").style.border = "solid 1px black";
+                document.getElementById("blue").style.border = "solid 1px black";
+                document.getElementById("green").style.border = "solid 1px black";
+                document.getElementById("white").style.border = "solid 1px black";
+                document.getElementById("orange").style.border = "solid 1px black";
+                document.getElementById("yellow").style.border = "solid 1px black";
+                document.getElementById("purple").style.border = "solid 1px black";
+                document.getElementById("pink").style.border = "solid 1px black";
+            }
+
+            function colourWhite(){
+                document.getElementById("_itemColour").value = "WHITE";
+
+                document.getElementById("white").style.border = "solid 4px gray";
+
+                document.getElementById("red").style.border = "solid 1px black";
+                document.getElementById("blue").style.border = "solid 1px black";
+                document.getElementById("green").style.border = "solid 1px black";
+                document.getElementById("black").style.border = "solid 1px black";
+                document.getElementById("orange").style.border = "solid 1px black";
+                document.getElementById("yellow").style.border = "solid 1px black";
+                document.getElementById("purple").style.border = "solid 1px black";
+                document.getElementById("pink").style.border = "solid 1px black";
+            }
+
+            function colourOrange(){
+                document.getElementById("_itemColour").value = "ORANGE";
+
+                document.getElementById("orange").style.border = "solid 4px gray";
+
+                document.getElementById("red").style.border = "solid 1px black";
+                document.getElementById("blue").style.border = "solid 1px black";
+                document.getElementById("green").style.border = "solid 1px black";
+                document.getElementById("black").style.border = "solid 1px black";
+                document.getElementById("white").style.border = "solid 1px black";
+                document.getElementById("yellow").style.border = "solid 1px black";
+                document.getElementById("purple").style.border = "solid 1px black";
+                document.getElementById("pink").style.border = "solid 1px black";
+            }
+
+            function colourYellow(){
+                document.getElementById("_itemColour").value = "YELLOW";
+
+                document.getElementById("yellow").style.border = "solid 4px gray";
+
+                document.getElementById("red").style.border = "solid 1px black";
+                document.getElementById("blue").style.border = "solid 1px black";
+                document.getElementById("green").style.border = "solid 1px black";
+                document.getElementById("black").style.border = "solid 1px black";
+                document.getElementById("white").style.border = "solid 1px black";
+                document.getElementById("orange").style.border = "solid 1px black";
+                document.getElementById("purple").style.border = "solid 1px black";
+                document.getElementById("pink").style.border = "solid 1px black";
+            }
+
+            function colourPurple(){
+                document.getElementById("_itemColour").value = "PURPLE";
+
+                document.getElementById("purple").style.border = "solid 4px gray";
+
+                document.getElementById("red").style.border = "solid 1px black";
+                document.getElementById("blue").style.border = "solid 1px black";
+                document.getElementById("green").style.border = "solid 1px black";
+                document.getElementById("black").style.border = "solid 1px black";
+                document.getElementById("white").style.border = "solid 1px black";
+                document.getElementById("orange").style.border = "solid 1px black";
+                document.getElementById("yellow").style.border = "solid 1px black";
+                document.getElementById("pink").style.border = "solid 1px black";
+            }
+
+            function colourPink(){
+                document.getElementById("_itemColour").value = "PINK";
+
+                document.getElementById("pink").style.border = "solid 4px gray";
+
+                document.getElementById("red").style.border = "solid 1px black";
+                document.getElementById("blue").style.border = "solid 1px black";
+                document.getElementById("green").style.border = "solid 1px black";
+                document.getElementById("black").style.border = "solid 1px black";
+                document.getElementById("white").style.border = "solid 1px black";
+                document.getElementById("orange").style.border = "solid 1px black";
+                document.getElementById("yellow").style.border = "solid 1px black";
+                document.getElementById("purple").style.border = "solid 1px black";
+            }
+
+            function typeHoodie(){
+                document.getElementById("_itemType").value = "HOODIE";
+                document.getElementById("hoodie").style.border = "solid 4px gray";
+
+                document.getElementById("tShirt").style.border = "none";
+                document.getElementById("tracksuit").style.border = "none";
+                document.getElementById("shorts").style.border = "none";
+                document.getElementById("trainers").style.border = "none";
+                document.getElementById("hiTops").style.border = "none";
+                document.getElementById("running").style.border = "none";
+                document.getElementById("boots").style.border = "none";
+                document.getElementById("underwear").style.border = "none";
+                document.getElementById("socks").style.border = "none";
+                document.getElementById("caps").style.border = "none";
+                document.getElementById("sunglasses").style.border = "none";
+            }
+
+            function typeTShirt() {
+                document.getElementById("_itemType").value = "T-SHIRT";
+                document.getElementById("tShirt").style.border = "solid 4px gray";
+
+                document.getElementById("hoodie").style.border = "none";
+                document.getElementById("tracksuit").style.border = "none";
+                document.getElementById("shorts").style.border = "none";
+                document.getElementById("trainers").style.border = "none";
+                document.getElementById("hiTops").style.border = "none";
+                document.getElementById("running").style.border = "none";
+                document.getElementById("boots").style.border = "none";
+                document.getElementById("underwear").style.border = "none";
+                document.getElementById("socks").style.border = "none";
+                document.getElementById("caps").style.border = "none";
+                document.getElementById("sunglasses").style.border = "none";
+            }
+
+            function typeTracksuit() {
+                document.getElementById("_itemType").value = "TRACKSUIT";
+                document.getElementById("tracksuit").style.border = "solid 4px gray";
+
+                document.getElementById("hoodie").style.border = "none";
+                document.getElementById("tShirt").style.border = "none";
+                document.getElementById("shorts").style.border = "none";
+                document.getElementById("trainers").style.border = "none";
+                document.getElementById("hiTops").style.border = "none";
+                document.getElementById("running").style.border = "none";
+                document.getElementById("boots").style.border = "none";
+                document.getElementById("underwear").style.border = "none";
+                document.getElementById("socks").style.border = "none";
+                document.getElementById("caps").style.border = "none";
+                document.getElementById("sunglasses").style.border = "none";
+            }
+
+            function typeShorts() {
+                document.getElementById("_itemType").value = "SHORTS";
+                document.getElementById("shorts").style.border = "solid 4px gray";
+
+                document.getElementById("hoodie").style.border = "none";
+                document.getElementById("tShirt").style.border = "none";
+                document.getElementById("tracksuit").style.border = "none";
+                document.getElementById("trainers").style.border = "none";
+                document.getElementById("hiTops").style.border = "none";
+                document.getElementById("running").style.border = "none";
+                document.getElementById("boots").style.border = "none";
+                document.getElementById("underwear").style.border = "none";
+                document.getElementById("socks").style.border = "none";
+                document.getElementById("caps").style.border = "none";
+                document.getElementById("sunglasses").style.border = "none";
+            }
+
+            function typeTrainers() {
+                document.getElementById("_itemType").value = "TRAINERS";
+                document.getElementById("trainers").style.border = "solid 4px gray";
+
+                document.getElementById("hoodie").style.border = "none";
+                document.getElementById("tShirt").style.border = "none";
+                document.getElementById("tracksuit").style.border = "none";
+                document.getElementById("shorts").style.border = "none";
+                document.getElementById("hiTops").style.border = "none";
+                document.getElementById("running").style.border = "none";
+                document.getElementById("boots").style.border = "none";
+                document.getElementById("underwear").style.border = "none";
+                document.getElementById("socks").style.border = "none";
+                document.getElementById("caps").style.border = "none";
+                document.getElementById("sunglasses").style.border = "none";
+            }
+
+            function typeHiTops() {
+                document.getElementById("_itemType").value = "HI-TOPS";
+                document.getElementById("hiTops").style.border = "solid 4px gray";
+
+                document.getElementById("hoodie").style.border = "none";
+                document.getElementById("tShirt").style.border = "none";
+                document.getElementById("tracksuit").style.border = "none";
+                document.getElementById("shorts").style.border = "none";
+                document.getElementById("trainers").style.border = "none";
+                document.getElementById("running").style.border = "none";
+                document.getElementById("boots").style.border = "none";
+                document.getElementById("underwear").style.border = "none";
+                document.getElementById("socks").style.border = "none";
+                document.getElementById("caps").style.border = "none";
+                document.getElementById("sunglasses").style.border = "none";
+            }
+
+            function typeRunning() {
+                document.getElementById("_itemType").value = "RUNNING SHOES";
+                document.getElementById("running").style.border = "solid 4px gray";
+
+                document.getElementById("hoodie").style.border = "none";
+                document.getElementById("tShirt").style.border = "none";
+                document.getElementById("tracksuit").style.border = "none";
+                document.getElementById("shorts").style.border = "none";
+                document.getElementById("trainers").style.border = "none";
+                document.getElementById("hiTops").style.border = "none";
+                document.getElementById("boots").style.border = "none";
+                document.getElementById("underwear").style.border = "none";
+                document.getElementById("socks").style.border = "none";
+                document.getElementById("caps").style.border = "none";
+                document.getElementById("sunglasses").style.border = "none";
+            }
+
+            function typeBoots() {
+                document.getElementById("_itemType").value = "FOOTBALL BOOTS";
+                document.getElementById("boots").style.border = "solid 4px gray";
+
+                document.getElementById("hoodie").style.border = "none";
+                document.getElementById("tShirt").style.border = "none";
+                document.getElementById("tracksuit").style.border = "none";
+                document.getElementById("shorts").style.border = "none";
+                document.getElementById("trainers").style.border = "none";
+                document.getElementById("hiTops").style.border = "none";
+                document.getElementById("running").style.border = "none";
+                document.getElementById("underwear").style.border = "none";
+                document.getElementById("socks").style.border = "none";
+                document.getElementById("caps").style.border = "none";
+                document.getElementById("sunglasses").style.border = "none";
+            }
+
+            function typeUnderwear() {
+                document.getElementById("_itemType").value = "UNDERWEAR";
+                document.getElementById("underwear").style.border = "solid 4px gray";
+
+                document.getElementById("hoodie").style.border = "none";
+                document.getElementById("tShirt").style.border = "none";
+                document.getElementById("tracksuit").style.border = "none";
+                document.getElementById("shorts").style.border = "none";
+                document.getElementById("trainers").style.border = "none";
+                document.getElementById("hiTops").style.border = "none";
+                document.getElementById("running").style.border = "none";
+                document.getElementById("boots").style.border = "none";
+                document.getElementById("socks").style.border = "none";
+                document.getElementById("caps").style.border = "none";
+                document.getElementById("sunglasses").style.border = "none";
+            }
+
+            function typeSocks() {
+                document.getElementById("_itemType").value = "SOCKS";
+                document.getElementById("socks").style.border = "solid 4px gray";
+
+                document.getElementById("hoodie").style.border = "none";
+                document.getElementById("tShirt").style.border = "none";
+                document.getElementById("tracksuit").style.border = "none";
+                document.getElementById("shorts").style.border = "none";
+                document.getElementById("trainers").style.border = "none";
+                document.getElementById("hiTops").style.border = "none";
+                document.getElementById("running").style.border = "none";
+                document.getElementById("boots").style.border = "none";
+                document.getElementById("underwear").style.border = "none";
+                document.getElementById("caps").style.border = "none";
+                document.getElementById("sunglasses").style.border = "none";
+            }
+
+            function typeCap() {
+                document.getElementById("_itemType").value = "CAP";
+                document.getElementById("caps").style.border = "solid 4px gray";
+
+                document.getElementById("hoodie").style.border = "none";
+                document.getElementById("tShirt").style.border = "none";
+                document.getElementById("tracksuit").style.border = "none";
+                document.getElementById("shorts").style.border = "none";
+                document.getElementById("trainers").style.border = "none";
+                document.getElementById("hiTops").style.border = "none";
+                document.getElementById("running").style.border = "none";
+                document.getElementById("boots").style.border = "none";
+                document.getElementById("underwear").style.border = "none";
+                document.getElementById("socks").style.border = "none";
+                document.getElementById("sunglasses").style.border = "none";
+            }
+
+            function typeSunglasses() {
+                document.getElementById("_itemType").value = "SUNGLASSES";
+                document.getElementById("sunglasses").style.border = "solid 4px gray";
+
+                document.getElementById("hoodie").style.border = "none";
+                document.getElementById("tShirt").style.border = "none";
+                document.getElementById("tracksuit").style.border = "none";
+                document.getElementById("shorts").style.border = "none";
+                document.getElementById("trainers").style.border = "none";
+                document.getElementById("hiTops").style.border = "none";
+                document.getElementById("running").style.border = "none";
+                document.getElementById("boots").style.border = "none";
+                document.getElementById("underwear").style.border = "none";
+                document.getElementById("socks").style.border = "none";
+                document.getElementById("caps").style.border = "none";
+            }
+
+            function male(){
+                document.getElementById("_itemGender").value = "MALE";
+
+                document.getElementById("male").style.border = "solid 4px gray";
+
+                document.getElementById("unisex").style.border = "none";
+                document.getElementById("female").style.border = "none";
+            }
+
+            function unisex(){
+                document.getElementById("_itemGender").value = "UNISEX";
+
+                document.getElementById("unisex").style.border = "solid 4px gray";
+
+                document.getElementById("male").style.border = "none";
+                document.getElementById("female").style.border = "none";
+            }
+
+            function female(){
+                document.getElementById("_itemGender").value = "FEMALE";
+
+                document.getElementById("female").style.border = "solid 4px gray";
+
+                document.getElementById("male").style.border = "none";
+                document.getElementById("unisex").style.border = "none";
+            }
+
+            function brand_nike(){
+                document.getElementById("_itemBrand").value = "NIKE";
+
+                document.getElementById("nike").style.border = "solid 4px green";
+
+                document.getElementById("hoodrich").style.border = "solid 2px black";
+                document.getElementById("adidas").style.border = "solid 2px black";
+                document.getElementById("ea7").style.border = "solid 2px black";
+                document.getElementById("puma").style.border = "solid 2px black";
+                document.getElementById("lacoste").style.border = "solid 2px black";
+                document.getElementById("new_balance").style.border = "solid 2px black";
+                document.getElementById("northFace").style.border = "solid 2px black";
+                document.getElementById("jordan").style.border = "solid 2px black";
+                document.getElementById("under_armour").style.border = "solid 2px black";
+            }
+
+            function brand_hoodrich(){
+                document.getElementById("_itemBrand").value = "HOODRICH";
+
+                document.getElementById("hoodrich").style.border = "solid 4px green";
+
+                document.getElementById("nike").style.border = "solid 2px black";
+                document.getElementById("adidas").style.border = "solid 2px black";
+                document.getElementById("ea7").style.border = "solid 2px black";
+                document.getElementById("puma").style.border = "solid 2px black";
+                document.getElementById("lacoste").style.border = "solid 2px black";
+                document.getElementById("new_balance").style.border = "solid 2px black";
+                document.getElementById("northFace").style.border = "solid 2px black";
+                document.getElementById("jordan").style.border = "solid 2px black";
+                document.getElementById("under_armour").style.border = "solid 2px black";
+            }
+
+            function brand_adidas(){
+                document.getElementById("_itemBrand").value = "ADIDAS";
+
+                document.getElementById("adidas").style.border = "solid 4px green";
+
+                document.getElementById("nike").style.border = "solid 2px black";
+                document.getElementById("hoodrich").style.border = "solid 2px black";
+                document.getElementById("ea7").style.border = "solid 2px black";
+                document.getElementById("puma").style.border = "solid 2px black";
+                document.getElementById("lacoste").style.border = "solid 2px black";
+                document.getElementById("new_balance").style.border = "solid 2px black";
+                document.getElementById("northFace").style.border = "solid 2px black";
+                document.getElementById("jordan").style.border = "solid 2px black";
+                document.getElementById("under_armour").style.border = "solid 2px black";
+            }
+
+            function brand_ea7(){
+                document.getElementById("_itemBrand").value = "EA7";
+
+                document.getElementById("ea7").style.border = "solid 4px green";
+
+                document.getElementById("nike").style.border = "solid 2px black";
+                document.getElementById("hoodrich").style.border = "solid 2px black";
+                document.getElementById("adidas").style.border = "solid 2px black";
+                document.getElementById("puma").style.border = "solid 2px black";
+                document.getElementById("lacoste").style.border = "solid 2px black";
+                document.getElementById("new_balance").style.border = "solid 2px black";
+                document.getElementById("northFace").style.border = "solid 2px black";
+                document.getElementById("jordan").style.border = "solid 2px black";
+                document.getElementById("under_armour").style.border = "solid 2px black";
+            }
+
+            function brand_puma(){
+                document.getElementById("_itemBrand").value = "PUMA";
+
+                document.getElementById("puma").style.border = "solid 4px green";
+
+                document.getElementById("nike").style.border = "solid 2px black";
+                document.getElementById("hoodrich").style.border = "solid 2px black";
+                document.getElementById("adidas").style.border = "solid 2px black";
+                document.getElementById("ea7").style.border = "solid 2px black";
+                document.getElementById("lacoste").style.border = "solid 2px black";
+                document.getElementById("new_balance").style.border = "solid 2px black";
+                document.getElementById("northFace").style.border = "solid 2px black";
+                document.getElementById("jordan").style.border = "solid 2px black";
+                document.getElementById("under_armour").style.border = "solid 2px black";
+            }
+
+            function brand_lacoste(){
+                document.getElementById("_itemBrand").value = "LACOSTE";
+
+                document.getElementById("lacoste").style.border = "solid 4px green";
+
+                document.getElementById("nike").style.border = "solid 2px black";
+                document.getElementById("hoodrich").style.border = "solid 2px black";
+                document.getElementById("adidas").style.border = "solid 2px black";
+                document.getElementById("ea7").style.border = "solid 2px black";
+                document.getElementById("puma").style.border = "solid 2px black";
+                document.getElementById("new_balance").style.border = "solid 2px black";
+                document.getElementById("northFace").style.border = "solid 2px black";
+                document.getElementById("jordan").style.border = "solid 2px black";
+                document.getElementById("under_armour").style.border = "solid 2px black";
+            }
+
+            function brand_newBalance(){
+                document.getElementById("_itemBrand").value = "NEW BALANCE";
+
+                document.getElementById("new_balance").style.border = "solid 4px green";
+
+                document.getElementById("nike").style.border = "solid 2px black";
+                document.getElementById("hoodrich").style.border = "solid 2px black";
+                document.getElementById("adidas").style.border = "solid 2px black";
+                document.getElementById("ea7").style.border = "solid 2px black";
+                document.getElementById("lacoste").style.border = "solid 2px black";
+                document.getElementById("puma").style.border = "solid 2px black";
+                document.getElementById("northFace").style.border = "solid 2px black";
+                document.getElementById("jordan").style.border = "solid 2px black";
+                document.getElementById("under_armour").style.border = "solid 2px black";
+            }
+
+            function brand_northFace(){
+                document.getElementById("_itemBrand").value = "NORTH FACE ";
+
+                document.getElementById("northFace").style.border = "solid 4px green";
+
+                document.getElementById("nike").style.border = "solid 2px black";
+                document.getElementById("hoodrich").style.border = "solid 2px black";
+                document.getElementById("adidas").style.border = "solid 2px black";
+                document.getElementById("ea7").style.border = "solid 2px black";
+                document.getElementById("lacoste").style.border = "solid 2px black";
+                document.getElementById("puma").style.border = "solid 2px black";
+                document.getElementById("new_balance").style.border = "solid 2px black";
+                document.getElementById("jordan").style.border = "solid 2px black";
+                document.getElementById("under_armour").style.border = "solid 2px black";
+            }
+
+            function brand_jordan(){
+                document.getElementById("_itemBrand").value = "JORDAN";
+
+                document.getElementById("jordan").style.border = "solid 4px green";
+
+                document.getElementById("nike").style.border = "solid 2px black";
+                document.getElementById("hoodrich").style.border = "solid 2px black";
+                document.getElementById("adidas").style.border = "solid 2px black";
+                document.getElementById("ea7").style.border = "solid 2px black";
+                document.getElementById("lacoste").style.border = "solid 2px black";
+                document.getElementById("puma").style.border = "solid 2px black";
+                document.getElementById("new_balance").style.border = "solid 2px black";
+                document.getElementById("northFace").style.border = "solid 2px black";
+                document.getElementById("under_armour").style.border = "solid 2px black";
+            }
+
+            function brand_underArmour(){
+                document.getElementById("_itemBrand").value = "UNDER ARMOUR";
+
+                document.getElementById("under_armour").style.border = "solid 4px green";
+
+                document.getElementById("nike").style.border = "solid 2px black";
+                document.getElementById("hoodrich").style.border = "solid 2px black";
+                document.getElementById("adidas").style.border = "solid 2px black";
+                document.getElementById("ea7").style.border = "solid 2px black";
+                document.getElementById("lacoste").style.border = "solid 2px black";
+                document.getElementById("puma").style.border = "solid 2px black";
+                document.getElementById("new_balance").style.border = "solid 2px black";
+                document.getElementById("northFace").style.border = "solid 2px black";
+                document.getElementById("jordan").style.border = "solid 2px black";
+            }
+
+        </script>
+
+    </head>
+        {% block body %}{% endblock %}
+    </body>
+</html>

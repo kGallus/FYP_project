@@ -1,0 +1,157 @@
+{{ include('base.html.twig') }}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Cart{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+
+        <style>
+            #content{
+                width: 80%;
+                margin: auto;
+            }
+
+            #cart_titles{
+                display: inline-flex;
+                width: 100%;
+                justify-content: space-evenly;
+            }
+
+            #cart_section{
+                width: 100%;
+                justify-content: space-evenly;
+                display: inline-flex;
+            }
+
+            #cart_section form{
+                /*padding: 5%;*/
+                display: inline-flex;
+                justify-content: space-evenly;
+            }
+
+            #item{
+                display: flex;
+                width: 100%;
+                /*justify-content: space-evenly;*/
+            }
+
+            #item img{
+                width: 40%;
+            }
+
+            #item_name{
+                display: grid;
+                padding-left: 3%;
+                color: black;
+            }
+
+            #quantity{
+                width: 8.4%;
+                text-align: center;
+            }
+
+            #item_price{
+                width: 5%;
+                text-align: center;
+            }
+
+            #item_total_price{
+                width: 10.65%;
+                text-align: center;
+            }
+
+            button{
+                height: fit-content;
+                background: transparent;
+                border: solid transparent 0px;
+                font-size: 1.5rem;
+                cursor: pointer;
+                display: flex;
+            }
+
+            h1{
+                font-size: 2rem;
+            }
+
+        </style>
+
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% set bar = 0 %}
+        {% set car = 0+bar %}
+        <div id="content">
+
+            <div id="cart_titles">
+                <h1 style="width: 50%; text-align: center;">Item</h1>
+                <h1>Quantity</h1>
+                <h1>Price</h1>
+                <h1>Total Price</h1>
+            </div>
+
+        {% for user in cart_array%}
+            {% set car = car + bar %}
+            <div id="cart_section">
+{#                <a href="http://localhost:8000/clothes/{{ item_id[car] }}" style="text-decoration: none;">#}
+                    <form id="remove_item" action="{{ path('show_cart') }}" method="post">
+                        <a href="http://localhost:8000/clothes/{{ item_id[car] }}" style="text-decoration: none; width: 50%">
+                            <div id="item">
+                                <img src="{{ absolute_url(asset(image[car])) }}" alt="Image Unavailable" style="border-radius: 1%;"/>
+                                <div id="item_name">
+                                    <p1 for="comment_author">{{ name[car] }}</p1>
+                                    <p1 for="comment_author">Size: {{ size[car] }}</p1>
+                                    <button type="submit" name="remove_item"><i class="fa-solid fa-trash"></i>Remove</button>
+                                </div>
+                            </div>
+                        </a>
+
+                        <div id="quantity">
+{#                            <form id="change_quantity" action="" method="post">#}
+                                <select name="quantity" id="quantity_select">
+                                    <option type="submit" onclick="" value="1">1</option>
+                                    <option type="submit" onclick="" value="2">2</option>
+                                    <option type="submit" onclick="" value="3">3</option>
+                                    <option type="submit" onclick="" value="4">4</option>
+                                </select>
+{#                            </form>#}
+                        </div>
+
+                        <div id="item_price">
+                            <p1 for="comment_author">{{ price[car] }}</p1>
+                        </div>
+
+                        <div id="item_total_price">
+                            <p1 for="comment_author">{{ price[car] }}</p1>
+                        </div>
+
+{#                        <div id="item_size">#}
+{#                        <p1 for="comment_author">{{ size[car] }}</p1>#}
+{#                        </div>#}
+
+{#                        <img src="{{ absolute_url(asset(image[car])) }}" alt="Image Unavailable"/>#}
+                        <input type="hidden" name="cart_ID" value="{{ cart_id[car] }}">
+{#                        <button type="submit" name="remove_item"><i class="fa-solid fa-trash"></i>Remove</button>#}
+                    </form>
+{#                </a>#}
+                {% set bar = 1 %}
+                </div>
+        {% endfor %}
+
+            {% if cart_array is empty %}
+
+                <h>You have no items in your basket</h>
+
+            {% endif %}
+
+        </div>
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+{#        <title>{% block title %}Welcome!{% endblock %}</title>#}
+        <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet'>
+        <link rel="icon" href="{{ absolute_url(asset('images/favicon.ico')) }}" />
+        <script src="https://kit.fontawesome.com/678bd8a445.js" crossorigin="anonymous"></script>
+        <style>
+            body{
+                margin: 0;
+                /*font-family: 'Courier New', monospace;*/
+                /*font-family: Garamond, serif;*/
+                /*font-family: Georgia, serif;*/
+                font-family: 'Abel';font-size: 22px;
+            }
+
+            h10{
+                text-align: center;
+                margin: auto;
+                display: block;
+                font-weight: bold;
+            }
+
+            .footer{
+                display: block;
+                width: 80%;
+                /*left:5%;*/
+                /*padding: 4%;*/
+                /*position: absolute;*/
+                background: white;
+                margin: auto;
+                border-bottom: solid 1px lightgray;
+                border-top: solid 1px lightgray;
+                margin-bottom: 1%;
+            }
+
+
+            .footer a{
+                display: block;
+                padding: 2%;
+                padding-left: 0;
+            }
+
+            .rows{
+                display: inline-flex;
+                justify-content: space-evenly;
+                width: 100%;
+            }
+
+            .columns{
+                float: left;
+                width:20%;
+                padding: 10px;
+                /*height: 250px;*/
+            }
+
+            .columns a{
+                float: none;
+                color: black;
+                text-decoration: none;
+                display: block;
+                text-align: center;
+                font-weight: normal!important;
+            }
+
+            .column a:hover{
+                background-color:lightgray;
+            }
+
+            #bottom{
+                width: 80%;
+                margin: auto;
+                margin-bottom: 2%!important;
+            }
+
+            #payments{
+                display: flex;
+                justify-content: end;
+            }
+
+            #payments img{
+                padding-right: 0.3%;
+            }
+
+        </style>
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+{#        {% block stylesheets %}#}
+{#            {{ encore_entry_link_tags('app') }}#}
+{#        {% endblock %}#}
+
+{#                        <a href="http://localhost:8000/Clothing/{{ 'MALE' }}">Men</a>#}
+{#                        <a href="{{ path('home_page') }}">Men</a>#}
+                        <div class="footer">
+                            <div class = "rows">
+                                <div class = "columns">
+{#                                    <a href="" style="font-weight: bold!important; padding: 0;">#}
+                                    <h10>About Us</h10>
+{#                                    <a style="font-weight: bold; font-size: 1.17em;" href="http://localhost:8000/Clothing/">Clothing</a>#}
+                                    <a href="#"><p5>About KG Undisputed</p5></a>
+                                    <a href="#"><p5>Investors</p5></a>
+                                    <a href="#"><p5>Careers</p5></a>
+                                    <a href="#"><p5>Sitemap</p5></a>
+                                </div>
+                                <div class = "columns">
+                                    <h10>Contact Us</h10>
+                                    <a href="#"><p5>Email Us</p5></a>
+                                    <a href="#"><p5>Call Us</p5></a>
+                                    <a href="#"><p5>Live Chat</p5></a>
+{#                                    <a href="#"><p5></p5></a>#}
+                                </div>
+                                <div class = "columns">
+                                    <h10>Legal</h10>
+                                    <a href="#"><p5>Terms & Conditions</p5></a>
+                                    <a href="#"><p5>Cookie Settings</p5></a>
+                                    <a href="#"><p5>Privacy & Cookies</p5></a>
+                                    <a href="#"><p5>Accessibility</p5></a>
+                                </div>
+                            </div>
+                        </div>
+
+        <div id="bottom">
+            <div id="payments">
+                <img src="{{ absolute_url(asset('images/cards-gb.png')) }}" style="width: 25%; padding-right: 0%!important;">
+                <img src="{{ absolute_url(asset('images/paypal-one.png')) }}" style="width: 5%;">
+                <img src="{{ absolute_url(asset('images/klarna-one.png')) }}" style="width: 5%;">
+                <img src="{{ absolute_url(asset('images/clearpay-one.png')) }}" style="width: 5%;">
+            </div>
+        </div>
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+    </body>
+</html>

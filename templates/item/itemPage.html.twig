@@ -1,0 +1,866 @@
+{{ include('base.html.twig') }}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{{ name }}{% endblock %}</title>
+        <style>
+            #content{
+                width: 90%;
+                margin: auto;
+                border-top: solid lightgray 3px;
+            }
+
+            #item_card{
+                display: inline-flex;
+            }
+
+            #item_card div{
+                padding:0.5%;
+            }
+            #small_thumbs{
+                width:12%;
+            }
+
+            #small_thumbs img{
+                width: 100%;
+                cursor: pointer;
+                padding-bottom: 5%;
+                border-radius: 1%;
+            }
+
+            #small_thumbs img:hover{
+                border: solid 1px;
+                outline-color: blue;
+            }
+
+            #main_image{
+                width:50%;
+            }
+
+            #main_image img {
+                width: 100%;
+                border-radius: 1%;
+            }
+
+            #details{
+                width: 70%;
+            }
+
+            #details div{
+            }
+
+            #item_price{
+                padding-top: 10% !important;
+            }
+
+            #collection_item_rows{
+                display: inline-flex;
+                /*flex-wrap: wrap;*/
+            }
+
+            #collection_item_rows a{
+                width:10%;
+                padding: 1%;
+            }
+
+            #collection_item_card p{
+                color: black;
+                font-size: 1.4rem;
+                overflow: hidden;
+            }
+
+            #collection_item_card img{
+                width: 100%;
+                border-radius: 1%;
+            }
+
+            #size_s:hover{
+                background: black;
+                color: white;
+            }
+
+            #size_m:hover{
+                background: black;
+                color: white;
+            }
+
+            #size_l:hover{
+                background: black;
+                color: white;
+            }
+
+            #size_xl:hover{
+                background: black;
+                color: white;
+            }
+
+            #size_75:hover{
+                background: black;
+                color: white;
+            }
+
+            #size_80:hover{
+                background: black;
+                color: white;
+            }
+
+            #size_85:hover{
+                background: black;
+                color: white;
+            }
+
+            #size_90:hover{
+                background: black;
+                color: white;
+            }
+
+            #size_95:hover{
+                background: black;
+                color: white;
+            }
+
+            #size_100:hover{
+                background: black;
+                color: white;
+            }
+
+            #size_105:hover{
+                background: black;
+                color: white;
+            }
+
+            #size_110:hover{
+                background: black;
+                color: white;
+            }
+
+            #size_115:hover{
+                background: black;
+                color: white;
+            }
+
+            #size_120:hover{
+                background: black;
+                color: white;
+            }
+
+            #item_size{
+                padding-top: 10% !important;
+            }
+
+            #item_size div{
+                display: inline-flex;
+                border: solid lightgray 1px;
+                font-size: 1rem;
+                padding: 2%;
+                cursor: pointer;
+            }
+
+            button{
+                font-size: 1.5rem ;
+                border-radius: 1%;
+                cursor: pointer;
+                background: #43d5b0;
+                color: white;
+                padding: 2%;
+                border: #43d5b0;
+            }
+
+            #item_options{
+                padding-top: 10% !important;
+            }
+
+            #item_desc{
+                /*padding-top: 20% !important;*/
+            }
+
+            p1{
+                font-size: 3rem;
+            }
+
+            p2{
+                font-size:3rem ;
+            }
+
+            #reading_section{
+                background: #f2f2f2;
+                width:100%;
+            }
+
+            #reading_section_options{
+                display: inline-flex;
+                justify-content: space-evenly;
+                width: 100%;
+                font-size: 1.5rem;
+                color: black;
+                border-bottom: solid lightgray 1px;
+            }
+
+            #reading_section_options p{
+                cursor: pointer;
+            }
+
+            #desc:hover{
+                border-bottom: solid black 1px;
+            }
+
+            #rev:hover{
+                border-bottom: solid black 1px;
+            }
+
+            #del:hover{
+                border-bottom: solid black 1px;
+            }
+
+            #contents{
+                padding:3%;
+                padding-top:1%;
+            }
+
+            #item_details label{
+                font-weight: bold;
+                font-size: 1.2rem;
+            }
+
+            #item_details p{
+                margin-top: 0;
+            }
+
+            #up_arrow{
+                text-align: center;
+                color: black;
+                font-size: 2.5rem;
+                cursor: pointer;
+            }
+
+            #down_arrow{
+                text-align: center;
+                color: black;
+                font-size: 2.5rem;
+                cursor: pointer;
+            }
+
+            #reviews div{
+                padding-top: 2%;
+            }
+
+            #user_comment{
+                margin-bottom: 2%;
+            }
+
+            #write_comment{
+                margin: auto;
+                display: block;
+                width: 65%;
+            }
+
+
+            #comment_section{
+                width: 40%;
+                margin: auto;
+                display: grid;
+                padding: 1%;
+                background: #3b82f6;
+                border-radius: 1%;
+                margin-bottom: 2%;
+            }
+
+            #comment_textbox{
+                width:fit-content;
+            }
+
+            .checked{
+                color: orange;
+            }
+
+            #suggested_item_rows{
+                display: inline-flex;
+                flex-wrap: wrap;
+                justify-content: space-evenly;
+            }
+
+            #suggested_item_rows a{
+                width:13%;
+                padding: 1%;
+            }
+
+            #suggested_item_card p{
+                color: black;
+                font-size: 1.4rem;
+                overflow: hidden;
+            }
+
+            #suggested_item_card img{
+                width: 100%;
+                border-radius: 1%;
+            }
+
+            h1{
+                text-align: center;
+                font-weight: normal;
+            }
+
+        </style>
+
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+        {% set bar = "" %}
+
+        <div id="content" style="">
+
+            <div id="item_card" style="">
+
+                <div id="small_thumbs" class="w3-row-padding w3-section">
+                    {% if image2 is not empty %}
+                        <img class="demo w3-opacity w3-hover-opacity-off" src="{{ absolute_url(asset(image1)) }}" onclick="currentDiv(1)">
+                        <img class="demo w3-opacity w3-hover-opacity-off" src="{{ absolute_url(asset(image2)) }}" onclick="currentDiv(2)">
+                    {% endif %}
+                    {% if image3 is not empty %}
+                        <img class="demo w3-opacity w3-hover-opacity-off" src="{{ absolute_url(asset(image3)) }}" onclick="currentDiv(3)">
+                    {% endif %}
+                    {% if image4 is not empty %}
+                        <img class="demo w3-opacity w3-hover-opacity-off" src="{{ absolute_url(asset(image4)) }}" onclick="currentDiv(4)">
+                    {% endif %}
+                </div>
+
+                <div id="main_image">
+                    <img class="mySlides" src="{{ absolute_url(asset(image1)) }}">
+                    {% if image2 is not empty %}
+                        <img class="mySlides" src="{{ absolute_url(asset(image2)) }}">
+                    {% endif %}
+                    {% if image3 is not empty %}
+                        <img class="mySlides" src="{{ absolute_url(asset(image3)) }}">
+                    {% endif %}
+                    {% if image4 is not empty %}
+                        <img class="mySlides" src="{{ absolute_url(asset(image4)) }}">
+                    {% endif %}
+                </div>
+
+                <div id="details">
+                    <div id="item_name">
+                        <p1><b>{{ name }}</b></p1>
+                    </div>
+                    <div id="item_price">
+                        <p2>£{{ price }}</p2>
+                    </div>
+
+                    {% set bar = 0 %}
+                    {% set car = 0+bar %}
+                    <div id="collection_items">
+                        <div id="collection_item_rows">
+                            {% for item in collection_id %}
+                                {% set car = car + bar %}
+                                {% if collection_id[car] != id %}
+                                    <a href="http://localhost:8000/clothes/{{ collection_id[car] }}" style="text-decoration: none;">
+                                        <div id="collection_item_card" style="">
+                                            <img src="{{ absolute_url(asset(collection_image1[car])) }}" alt="Image Unavailable"/>
+                                        </div>
+                                    </a>
+                                {% endif %}
+                                {% set bar = 1 %}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+
+                    {% if shoeCheck != "FOOTWEAR" %}
+                    <div id="item_size">
+                        <t>Sizes:</t>
+                        <br>
+                            <div id="size_s" onclick="size_s();" name="size_s" value="S">S</div>
+                            <div id="size_m" onclick="size_m();" name="size_m" value="M">M</div>
+                            <div id="size_l" onclick="size_l();" name="size_l" value="L">L</div>
+                            <div id="size_xl" onclick="size_xl();" name="size_xl" value="XL">XL</div>
+                    </div>
+                    {% endif %}
+
+                    {% if shoeCheck == "FOOTWEAR" %}
+                        <div id="item_size">
+                            <t>Sizes:</t>
+                            <br>
+                            <div id="size_75" onclick="size_75();" name="size_75">7.5</div>
+                            <div id="size_80" onclick="size_80();" name="size_8">8</div>
+                            <div id="size_85" onclick="size_85();" name="size_85">8.5</div>
+                            <div id="size_90" onclick="size_90();" name="size_9">9</div>
+                            <div id="size_95" onclick="size_95();" name="size_95">9.5</div>
+                            <div id="size_100" onclick="size_100();" name="size_10">10</div>
+                            <div id="size_105" onclick="size_105();" name="size_105">10.5</div>
+                            <div id="size_110" onclick="size_110();" name="size_11">11</div>
+                            <div id="size_115" onclick="size_115();" name="size_115">11.5</div>
+                            <div id="size_120" onclick="size_120();" name="size_12">12</div>
+                        </div>
+                    {% endif %}
+
+                    <div id="item_options">
+                        <form action="{{ path('item_page', { 'id': id }) }}" method="post">
+                            <button name="add_cart" type="submit"  value="{{ id }}">Add To Bag</button>
+                            <input type="hidden" name="item_size" id="size_selected"  value="">
+                        </form>
+{#                        <button id="wishlist"></button>#}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+            <div id="reading_section">
+                <div id="reading_section_options">
+                    <p id="desc" onclick="open_item_details()">Description</p>
+                    <p id="rev" onclick="open_reviews()">Reviews</p>
+                    <p id="del"> Delivery</p>
+                    </a>
+                </div>
+
+                <div id="contents">
+                    <div id="item_details">
+                        <label>Colour</label>
+                        <p>{{ colour }}</p>
+
+                        <label>Brand</label>
+                        <p>{{ brand }}</p>
+
+                        <label>Material</label>
+                        <p>{{ material }}</p>
+                    </div>
+
+                    <div id="item_desc">
+                        <p>{{ description }}</p>
+                    </div>
+
+                    <div id="reviews">
+                        {% if is_granted("ROLE_USER") %}
+                            <div id="user_comment" style="padding: 0%!important;">
+                                <form id="write_comment" action="{{ path('item_page', { 'id': id }) }}" method="post">
+                                    <div id="write_comment" style="padding: 0%!important;">
+                                    <h2 style="text-align: center">Write a review</h2>
+                                    <div id="stars" style="padding: 0%!important; text-align: center;">
+                                        <span id="star1" onclick="star1()" class="fa fa-star"></span>
+                                        <span id="star2" onclick="star2()" class="fa fa-star"></span>
+                                        <span id="star3" onclick="star3()" class="fa fa-star"></span>
+                                        <span id="star4" onclick="star4()" class="fa fa-star"></span>
+                                        <span id="star5" onclick="star5()" class="fa fa-star"></span>
+                                    </div>
+                                    <textarea placeholder="Write a comment" id="written_comment" name="written_comment" style="height: 4rem;display: block; margin: auto; margin-top: 1%; margin-bottom: 1%; width: 80%;"></textarea>
+                                    <input type="hidden" name="album_id" value="{{ id }}">
+                                    <input type="hidden" id="stars_rating" name="stars_rating" value="">
+                                    {#                <input type="hidden" name="author_name" value="{{ email }}">#}
+                                    <button name="work" type="submit1" style=" display: block; margin: auto;">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        {% endif %}
+
+
+
+                        {% set bar = 0 %}
+                        {% set car = 0+bar %}
+
+                        {% for user in comment_array%}
+                            {% set car = car + bar %}
+
+                            <div id="comment_section">
+                                <label1 for="comment_author">{{ author[car] }}</label1>
+                                <div id="stars">
+                                    {%if stars[car] == 1 %}
+                                    <span id="rating_star1" class="fa fa-star checked"></span>
+                                    {% endif %}
+                                    {%if stars[car] == 2 %}
+                                        <span id="rating_star1" class="fa fa-star checked"></span>
+                                        <span id="rating_star2" class="fa fa-star checked"></span>
+                                    {% endif %}
+                                    {%if stars[car] == 3 %}
+                                        <span id="rating_star1" class="fa fa-star checked"></span>
+                                        <span id="rating_star2" class="fa fa-star checked"></span>
+                                        <span id="rating_star3" class="fa fa-star checked"></span>
+                                    {% endif %}
+                                    {%if stars[car] == 4 %}
+                                        <span id="rating_star1" class="fa fa-star checked"></span>
+                                        <span id="rating_star2" class="fa fa-star checked"></span>
+                                        <span id="rating_star3" class="fa fa-star checked"></span>
+                                        <span id="rating_star4" class="fa fa-star checked"></span>
+                                    {% endif %}
+                                    {%if stars[car] == 5 %}
+                                        <span id="rating_star1" class="fa fa-star checked"></span>
+                                        <span id="rating_star2" class="fa fa-star checked"></span>
+                                        <span id="rating_star3" class="fa fa-star checked"></span>
+                                        <span id="rating_star4" class="fa fa-star checked"></span>
+                                        <span id="rating_star5" class="fa fa-star checked"></span>
+                                    {% endif %}
+                                </div>
+                                <span id="comment_textbox"><p>{{ content[car] }}</p></span>
+                                <input type="hidden" id="stars" name="stars" value="{{ stars[car] }}">
+                                {% set bar = 1 %}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+            </div>
+
+                <div id="up_arrow" onclick="up_arrow_section()">
+                    <i class="fa-solid fa-angle-up"></i>
+                </div>
+
+                <div id="down_arrow" onclick="down_arrow_section()">
+                    <i class="fa-solid fa-angle-down"></i>
+                </div>
+
+            </div>
+
+
+        {% set bar = 0 %}
+        {% set car = 0+bar %}
+        <div id="suggested_items">
+            <h1>Why Not Check Out More Items?</h1>
+            <div id="suggested_item_rows">
+                {% for item in suggested_id %}
+                    {% set car = car + bar %}
+                    {% if suggested_id[car] != id %}
+                        <a href="http://localhost:8000/clothes/{{ suggested_id[car] }}" style="text-decoration: none;">
+                            <div id="suggested_item_card" style="">
+                                <img src="{{ absolute_url(asset(suggested_image1[car])) }}" alt="Image Unavailable"/>
+                                <p>{{ suggested_name[car] }}</p>
+                                <p>£{{ suggested_price[car] }}</p>
+                            </div>
+                        </a>
+                    {% endif %}
+                    {% set bar = 1 %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <script>
+            //Variables
+            var slideIndex = 1;
+            let arrow_index = true;
+            let section_active = false;
+            showDivs(slideIndex);
+
+
+            //Slideshow functions
+            function plusDivs(n) {
+                showDivs(slideIndex += n);
+            }
+
+            function currentDiv(n) {
+                showDivs(slideIndex = n);
+            }
+
+            // Function responsible for changing the main image when user clicks on another one
+            function showDivs(n) {
+                var i;
+                var x = document.getElementsByClassName("mySlides");
+                var dots = document.getElementsByClassName("demo");
+                if (n > x.length) {slideIndex = 1}
+                if (n < 1) {slideIndex = x.length}
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";
+                }
+                for (i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" w3-red", "");
+                }
+                x[slideIndex-1].style.display = "block";
+                dots[slideIndex-1].className += " w3-red";
+            }
+
+            //Functions for the item size buttons
+            function size_s(){
+                document.getElementById("size_selected").value = "S";
+                document.getElementById("size_s").style.background = "#43d5b0";
+                document.getElementById("size_m").style.background = "";
+                document.getElementById("size_l").style.background = "";
+                document.getElementById("size_xl").style.background = "";
+            }
+
+            function size_m(){
+                document.getElementById("size_selected").value = "M";
+                document.getElementById("size_m").style.background = "#43d5b0";
+                document.getElementById("size_s").style.background = "";
+                document.getElementById("size_l").style.background = "";
+                document.getElementById("size_xl").style.background = "";
+            }
+
+            function size_l(){
+                document.getElementById("size_selected").value = "L";
+                document.getElementById("size_l").style.background = "#43d5b0";
+                document.getElementById("size_s").style.background = "";
+                document.getElementById("size_m").style.background = "";
+                document.getElementById("size_xl").style.background = "";
+            }
+
+            function size_xl(){
+                document.getElementById("size_selected").value = "XL";
+                document.getElementById("size_xl").style.background = "#43d5b0";
+                document.getElementById("size_s").style.background = "";
+                document.getElementById("size_m").style.background = "";
+                document.getElementById("size_l").style.background = "";
+            }
+
+            // Function for changing item shoe size
+            function size_75(){
+                document.getElementById("size_selected").value = "7.5";
+                document.getElementById("size_75").style.background = "#43d5b0";
+
+                document.getElementById("size_80").style.background = "";
+                document.getElementById("size_85").style.background = "";
+                document.getElementById("size_90").style.background = "";
+                document.getElementById("size_95").style.background = "";
+                document.getElementById("size_100").style.background = "";
+                document.getElementById("size_105").style.background = "";
+                document.getElementById("size_110").style.background = "";
+                document.getElementById("size_115").style.background = "";
+                document.getElementById("size_120").style.background = "";
+            }
+
+            function size_80(){
+                document.getElementById("size_selected").value = "8";
+                document.getElementById("size_80").style.background = "#43d5b0";
+
+                document.getElementById("size_75").style.background = "";
+                document.getElementById("size_85").style.background = "";
+                document.getElementById("size_90").style.background = "";
+                document.getElementById("size_95").style.background = "";
+                document.getElementById("size_100").style.background = "";
+                document.getElementById("size_105").style.background = "";
+                document.getElementById("size_110").style.background = "";
+                document.getElementById("size_115").style.background = "";
+                document.getElementById("size_120").style.background = "";
+            }
+
+            function size_85(){
+                document.getElementById("size_selected").value = "8.5";
+                document.getElementById("size_85").style.background = "#43d5b0";
+
+                document.getElementById("size_75").style.background = "";
+                document.getElementById("size_80").style.background = "";
+                document.getElementById("size_90").style.background = "";
+                document.getElementById("size_95").style.background = "";
+                document.getElementById("size_100").style.background = "";
+                document.getElementById("size_105").style.background = "";
+                document.getElementById("size_110").style.background = "";
+                document.getElementById("size_115").style.background = "";
+                document.getElementById("size_120").style.background = "";
+            }
+
+            function size_90(){
+                document.getElementById("size_selected").value = "9";
+                document.getElementById("size_90").style.background = "#43d5b0";
+
+                document.getElementById("size_75").style.background = "";
+                document.getElementById("size_80").style.background = "";
+                document.getElementById("size_85").style.background = "";
+                document.getElementById("size_95").style.background = "";
+                document.getElementById("size_100").style.background = "";
+                document.getElementById("size_105").style.background = "";
+                document.getElementById("size_110").style.background = "";
+                document.getElementById("size_115").style.background = "";
+                document.getElementById("size_120").style.background = "";
+            }
+
+            function size_95(){
+                document.getElementById("size_selected").value = "9.5";
+                document.getElementById("size_95").style.background = "#43d5b0";
+
+                document.getElementById("size_75").style.background = "";
+                document.getElementById("size_80").style.background = "";
+                document.getElementById("size_85").style.background = "";
+                document.getElementById("size_90").style.background = "";
+                document.getElementById("size_100").style.background = "";
+                document.getElementById("size_105").style.background = "";
+                document.getElementById("size_110").style.background = "";
+                document.getElementById("size_115").style.background = "";
+                document.getElementById("size_120").style.background = "";
+            }
+
+            function size_100(){
+                document.getElementById("size_selected").value = "10";
+                document.getElementById("size_100").style.background = "#43d5b0";
+
+                document.getElementById("size_75").style.background = "";
+                document.getElementById("size_80").style.background = "";
+                document.getElementById("size_85").style.background = "";
+                document.getElementById("size_90").style.background = "";
+                document.getElementById("size_95").style.background = "";
+                document.getElementById("size_105").style.background = "";
+                document.getElementById("size_110").style.background = "";
+                document.getElementById("size_115").style.background = "";
+                document.getElementById("size_120").style.background = "";
+            }
+
+            function size_105(){
+                document.getElementById("size_selected").value = "10.5";
+                document.getElementById("size_105").style.background = "#43d5b0";
+
+                document.getElementById("size_75").style.background = "";
+                document.getElementById("size_80").style.background = "";
+                document.getElementById("size_85").style.background = "";
+                document.getElementById("size_90").style.background = "";
+                document.getElementById("size_95").style.background = "";
+                document.getElementById("size_100").style.background = "";
+                document.getElementById("size_110").style.background = "";
+                document.getElementById("size_115").style.background = "";
+                document.getElementById("size_120").style.background = "";
+            }
+
+            function size_110(){
+                document.getElementById("size_selected").value = "11";
+                document.getElementById("size_110").style.background = "#43d5b0";
+
+                document.getElementById("size_75").style.background = "";
+                document.getElementById("size_80").style.background = "";
+                document.getElementById("size_85").style.background = "";
+                document.getElementById("size_90").style.background = "";
+                document.getElementById("size_95").style.background = "";
+                document.getElementById("size_100").style.background = "";
+                document.getElementById("size_105").style.background = "";
+                document.getElementById("size_115").style.background = "";
+                document.getElementById("size_120").style.background = "";
+            }
+
+            function size_115(){
+                document.getElementById("size_selected").value = "11.5";
+                document.getElementById("size_115").style.background = "#43d5b0";
+
+                document.getElementById("size_75").style.background = "";
+                document.getElementById("size_80").style.background = "";
+                document.getElementById("size_85").style.background = "";
+                document.getElementById("size_90").style.background = "";
+                document.getElementById("size_95").style.background = "";
+                document.getElementById("size_100").style.background = "";
+                document.getElementById("size_105").style.background = "";
+                document.getElementById("size_110").style.background = "";
+                document.getElementById("size_120").style.background = "";
+            }
+
+            function size_120(){
+                document.getElementById("size_selected").value = "12";
+                document.getElementById("size_120").style.background = "#43d5b0";
+
+                document.getElementById("size_75").style.background = "";
+                document.getElementById("size_80").style.background = "";
+                document.getElementById("size_85").style.background = "";
+                document.getElementById("size_90").style.background = "";
+                document.getElementById("size_95").style.background = "";
+                document.getElementById("size_100").style.background = "";
+                document.getElementById("size_105").style.background = "";
+                document.getElementById("size_110").style.background = "";
+                document.getElementById("size_115").style.background = "";
+            }
+
+            // Function for changing reading section
+            document.getElementById("item_details").style.display = "block";
+            document.getElementById("item_desc").style.display = "block";
+            document.getElementById("reviews").style.display = "none";
+            document.getElementById("contents").style.display = "none";
+            document.getElementById("up_arrow").style.display = "none";
+
+            function open_item_details(){
+                document.getElementById("contents").style.display = "block";
+                document.getElementById("item_details").style.display = "block";
+                document.getElementById("item_desc").style.display = "block";
+                document.getElementById("reviews").style.display = "none";
+                down_arrow_section();
+            }
+
+            function open_reviews(){
+                document.getElementById("contents").style.display = "block";
+                document.getElementById("item_details").style.display = "none";
+                document.getElementById("item_desc").style.display = "none";
+                document.getElementById("reviews").style.display = "block";
+                down_arrow_section();
+            }
+
+            // Arrow buttons for opening and closing of reading section
+            function up_arrow_section(){
+                if(arrow_index === false){
+                    document.getElementById("down_arrow").style.display = "block";
+                    document.getElementById("up_arrow").style.display = "none";
+                    document.getElementById("contents").style.display = "none";
+                    arrow_index = true;
+                }
+            }
+
+            // Arrow buttons for opening and closing of reading section
+            function down_arrow_section(){
+                if(arrow_index === true){
+                    document.getElementById("up_arrow").style.display = "block";
+                    document.getElementById("down_arrow").style.display = "none";
+                    document.getElementById("contents").style.display = "block";
+                    arrow_index = false;
+                    section_active = false;
+                }
+            }
+
+            //Stars rating system
+            function star1() {
+                document.getElementById("star1").className = "fa fa-star checked";
+
+                document.getElementById("star2").className = "fa fa-star";
+                document.getElementById("star3").className = "fa fa-star";
+                document.getElementById("star4").className = "fa fa-star";
+                document.getElementById("star5").className = "fa fa-star";
+
+                document.getElementById("stars_rating").value = "1";
+            }
+
+            function star2() {
+                document.getElementById("star1").className = "fa fa-star checked";
+                document.getElementById("star2").className = "fa fa-star checked";
+
+                document.getElementById("star3").className = "fa fa-star";
+                document.getElementById("star4").className = "fa fa-star";
+                document.getElementById("star5").className = "fa fa-star";
+
+                document.getElementById("stars_rating").value = "2";
+            }
+
+            function star3() {
+                document.getElementById("star1").className = "fa fa-star checked";
+                document.getElementById("star2").className = "fa fa-star checked";
+                document.getElementById("star3").className = "fa fa-star checked";
+
+                document.getElementById("star4").className = "fa fa-star";
+                document.getElementById("star5").className = "fa fa-star";
+
+                document.getElementById("stars_rating").value = "3";
+            }
+
+            function star4() {
+                document.getElementById("star1").className = "fa fa-star checked";
+                document.getElementById("star2").className = "fa fa-star checked";
+                document.getElementById("star3").className = "fa fa-star checked";
+                document.getElementById("star4").className = "fa fa-star checked";
+
+                document.getElementById("star5").className = "fa fa-star";
+
+                document.getElementById("stars_rating").value = "4";
+            }
+
+            function star5() {
+                document.getElementById("star1").className = "fa fa-star checked";
+                document.getElementById("star2").className = "fa fa-star checked";
+                document.getElementById("star3").className = "fa fa-star checked";
+                document.getElementById("star4").className = "fa fa-star checked";
+                document.getElementById("star5").className = "fa fa-star checked";
+
+                document.getElementById("stars_rating").value = "5";
+            }
+
+            // window.addEventListener('load', function (){
+            //     if ()
+            //
+            // })
+
+
+        </script>
+        {{ include('footer.html.twig') }}
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+    </body>
+</html>

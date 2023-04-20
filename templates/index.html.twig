@@ -1,0 +1,337 @@
+{{ include('base.html.twig') }}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Home{% endblock %}</title>
+        <Style>
+
+
+            .slideshow-container {
+                max-width: 100%;
+                position: relative;
+                margin: auto;
+            }
+
+            .prev, .next {
+                cursor: pointer;
+                position: absolute;
+                top: 50%;
+                width: auto;
+                padding: 16px;
+                margin-top: -22px;
+                color: white;
+                font-weight: bold;
+                font-size: 18px;
+                transition: 0.6s ease;
+                border-radius: 0 3px 3px 0;
+                user-select: none;
+            }
+
+            /* Position the "next button" to the right */
+            .next {
+                right: 0;
+                border-radius: 3px 0 0 3px;
+            }
+
+            /* On hover, add a black background color with a little bit see-through */
+            .prev:hover, .next:hover {
+                background-color: rgba(0,0,0,0.8);
+            }
+
+            /* The dots/bullets/indicators */
+            .dot {
+                cursor: pointer;
+                height: 15px;
+                width: 15px;
+                margin: 0 2px;
+                background-color: #bbb;
+                border-radius: 50%;
+                display: inline-block;
+                transition: background-color 0.6s ease;
+            }
+
+            .active, .dot:hover {
+                background-color: #717171;
+            }
+
+            /* Fading animation */
+            .fade {
+                animation-name: fade;
+                animation-duration: 1.5s;
+            }
+
+            @keyframes fade {
+                from {opacity: .4}
+                to {opacity: 1}
+            }
+
+            #gender_shopping{
+                width: 80%;
+                display: block;
+                margin: auto;
+            }
+
+            #shopping_row{
+                display: inline-flex;
+                justify-content: space-between;
+            }
+
+            #gender_shopping img{
+                width: 100%;
+                margin: auto;
+            }
+
+            #gender_shopping h{
+                text-align: center;
+                display: block;
+                font-size: 2rem;
+                background: yellow;
+                font-weight: bold;
+            }
+
+            #gender_shopping a{
+                text-decoration: none;
+                list-style-type: none;
+                color: black;
+            }
+
+            .gender{
+                width: 40%;
+            }
+
+            #new_items{
+                width: 80%;
+                margin: auto;
+                display: block;
+                margin-top: 5%;
+            }
+
+            #new_items h{
+                display: block;
+                text-align: center;
+                font-size: 2rem;
+                font-weight: bold;
+            }
+
+            #shopping_items{
+                display: inline-flex;
+                flex-wrap: wrap;
+                justify-content: space-evenly;
+                border-bottom: 1px solid lightgray ;
+            }
+
+            #shopping_items a{
+                width:22%;
+                padding: 0%;
+            }
+
+            #item_card{
+            }
+
+            #item_card img{
+                width: 100%;
+            }
+
+            #item_card p{
+                color: black;
+                font-size: 1.5rem;
+            }
+
+            #new_gender{
+                margin-bottom: 1%;
+                margin-top: 1%;
+                text-align: center;
+
+            }
+
+            #male{
+                background: none;
+                border: solid 1px lightgray;
+                font-family: 'Abel';
+                font-size: 2rem;
+                cursor: pointer;
+            }
+
+            #male:hover{
+                background: black;
+                color: white;
+            }
+
+            #female{
+                background: none;
+                border: solid 1px lightgray;
+                font-family: 'Abel';
+                font-size: 2rem;
+                cursor: pointer;
+            }
+
+            #female:hover{
+                background: black;
+                color: white;
+            }
+
+        </Style>
+{#        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">#}
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+        <div id="body">
+
+            <div class="slideshow-container">
+
+                <div class="mySlides fade">
+                    <img src="{{ absolute_url(asset('images/banner.jpg')) }}" style="width:100%">
+                </div>
+
+                <div class="mySlides fade">
+                    <img src="{{ absolute_url(asset('images/banner.jpg')) }}" style="width:100%">
+                </div>
+
+                <div class="mySlides fade">
+                    <img src="{{ absolute_url(asset('images/banner.jpg')) }}" style="width:100%">
+{#                    <div class="text">Caption Three</div>#}
+                </div>
+
+                <a class="prev" onclick="plusSlides(-1)">❮</a>
+                <a class="next" onclick="plusSlides(1)">❯</a>
+
+            </div>
+            <br>
+
+            <div style="text-align:center">
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+            </div>
+
+
+            <div id="gender_shopping">
+
+                <div id="shopping_row">
+                    <div id="female_shopping" class="gender">
+                        <a href="http://localhost:8000/Clothing/FEMALE">
+                            <h>FEMALE SECTION</h>
+                            <img src="{{ absolute_url(asset('images/16787193941756016066640f39a2d9625.jpg')) }}" >
+                        </a>
+                    </div>
+
+                    <div id="male_shopping" class="gender">
+                        <a href="http://localhost:8000/Clothing/MALE">
+                            <h>MALE SECTION</h>
+                            <img src="{{ absolute_url(asset('images/167931612616629679446418549e30c1e.jpg')) }}">
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="new_items">
+                <h>NEW ITEMS</h>
+                <form name="new_gender" id="new_gender" action="{{ path('home_page') }}" method="post">
+                    <input type="hidden" name="active_gender" id="active_gender" value="{{ active_gender }}">
+                    <input type="submit" name="female" id="female" onclick="active_female()" value="FEMALE">
+                    <input type="submit" name="male" id="male" onclick="active_male()" value="MALE">
+                </form>
+                <div id="shopping_items">
+                    {% set bar = 0 %}
+                    {% set car = 0 %}
+                    {% for item in id %}
+                        {% set car = car + bar %}
+                        <a href="http://localhost:8000/clothes/{{ id[car] }}" style="text-decoration: none;">
+                            <div id="item_card" style="">
+                                <img src="{{ absolute_url(asset(image[car])) }}" alt="Image Unavailable"/>
+                                <p>{{ name[car] }}</p>
+                                <p>£{{ price[car] }}</p>
+                                {% set bar = 1 %}
+                            </div>
+
+                        </a>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+        <script>
+            let slideIndex = 1;
+            showSlides(slideIndex);
+
+            function plusSlides(n) {
+                showSlides(slideIndex += n);
+            }
+
+            function currentSlide(n) {
+                showSlides(slideIndex = n);
+            }
+
+            function showSlides(n) {
+                let i;
+                let slides = document.getElementsByClassName("mySlides");
+                let dots = document.getElementsByClassName("dot");
+                for (i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";
+                }
+                slideIndex++;
+                if (slideIndex > slides.length) {
+                    slideIndex = 1
+                }
+                for (i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" active", "");
+                }
+                slides[slideIndex - 1].style.display = "block";
+                dots[slideIndex - 1].className += " active";
+                setTimeout(showSlides, 8000); // Change image every 2 seconds
+
+            //    ---------------------------------NORMAL NOT AUTOMATIC SLIDESHOW------------------------------------------
+            // let i;
+            // let slides = document.getElementsByClassName("mySlides");
+            // let dots = document.getElementsByClassName("dot");
+            // if (n > slides.length) {slideIndex = 1}
+            // if (n < 1) {slideIndex = slides.length}
+            // for (i = 0; i < slides.length; i++) {
+            //     slides[i].style.display = "none";
+            // }
+            // for (i = 0; i < dots.length; i++) {
+            //     dots[i].className = dots[i].className.replace(" active", "");
+            // }
+            // slides[slideIndex-1].style.display = "block";
+            // dots[slideIndex-1].className += " active";
+            // }
+            }
+
+            window.onload = function() {
+                activeGender();
+            }
+
+            function activeGender(){
+                const active = "{{ active_gender }}";
+                if(active === "MALE" ){
+                    document.getElementById("male").style.background = "green";
+                    document.getElementById("male").style.color = "white";
+                    document.getElementById("female").style.background = "none";
+                    document.getElementById("female").style.color = "black";
+                }
+                if(active === "FEMALE" ){
+                    document.getElementById("female").style.background = "green";
+                    document.getElementById("female").style.color = "white";
+                    document.getElementById("male").style.background = "none";
+                    document.getElementById("male").style.color = "black";
+                }
+            }
+
+
+        </script>
+        {{ include('footer.html.twig') }}
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+    </body>
+</html>

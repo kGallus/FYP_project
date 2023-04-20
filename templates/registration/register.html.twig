@@ -1,0 +1,104 @@
+{#{% extends 'base.html.twig' %}#}
+<link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet'>
+<title>{% block title %}Register{% endblock %}</title>
+<link rel="icon" href="{{ absolute_url(asset('images/favicon.ico')) }}" />
+
+{% block body %}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+
+
+    <div id="main">
+
+        <div id="login">
+
+    <h1>Register</h1>
+
+    {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.email, {
+            label: 'Email'
+        }) }}
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }}
+
+            {{ form_row(registrationForm.agreeTerms) }}
+
+        <button type="submit" class="btn">Register</button>
+    {{ form_end(registrationForm) }}
+
+    <h>Already a member?<br><a href="http://localhost:8000/login">LOGIN</a></h>
+
+        </div>
+    </div>
+
+
+
+    <style>
+        body{
+            font-family: 'Abel';font-size: 22px;
+            background: teal;
+        }
+
+        #main{
+            display: block;
+            width: 100%;
+        }
+
+        a{
+            color: black;
+        }
+
+        h{
+            text-align: center;
+            display: block;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        h1{
+            padding: 3%;
+            color: black;
+            font-size: 4rem;
+            text-align: center;
+        }
+
+        #login{
+            display: block;
+            border-radius: 5%;
+            border: 2px solid white;
+            width: 40%;
+            margin: auto;
+            background: white;
+        }
+
+        form{
+            margin: auto;
+            width: 48%;
+        }
+
+        input{
+            border: 2px solid slategray;
+            border-radius: 2%;
+            /*padding-bottom: 2%!important;*/
+            font-family: 'Abel';font-size: 2rem;
+            width:100%;
+        }
+
+        button{
+            margin-top: 7%!important;
+            font-size: 2rem;
+            border-radius: 2%;
+            cursor: pointer;
+            padding: 2%;
+            background: #43d5b0;
+            border: #43d5b0;
+            color: white;
+            display: block;
+            margin: auto;
+        }
+
+    </style>
+
+{% endblock %}

@@ -1,0 +1,315 @@
+{{ include('base.html.twig') }}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Clothes{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+
+        <style>
+            #content{
+                width: 90%;
+                margin: auto;
+                justify-content: space-evenly;
+                display: flex;
+                border-top: 3px solid lightgray ;
+                margin-bottom: 2%!important;
+                /*margin-top: 2%!important;*/
+            }
+
+            .new_gender{
+                margin-bottom: 1%;
+                margin-top: 1%;
+                text-align: center;
+            }
+
+            #item_section h{
+                display: block;
+                text-align: center;
+                font-size: 2rem;
+                font-weight: bold;
+            }
+
+            .male{
+                background: none;
+                border: solid 1px lightgray;
+                font-family: 'Abel';
+                font-size: 2rem;
+                cursor: pointer;
+            }
+
+            .male:hover{
+                background: black;
+                color: white;
+            }
+
+            .female{
+                background: none;
+                border: solid 1px lightgray;
+                font-family: 'Abel';
+                font-size: 2rem;
+                cursor: pointer;
+            }
+
+            .female:hover{
+                background: black;
+                color: white;
+            }
+
+            #item_section{
+                /*border-top: 3px solid lightgray ;*/
+            }
+
+            .item_row{
+                display: inline-flex;
+                flex-wrap: wrap;
+                justify-content: space-evenly;
+                /*border-bottom: 1px solid lightgray ;*/
+                min-width: 80%;
+                margin-top: 1%;
+            }
+
+            .item_row a{
+                width:17%;
+                /*padding: 3%;*/
+            }
+
+            #item_card{
+            }
+
+            .item_cards p{
+                color: black;
+                font-size: 1.5rem;
+            }
+
+            .item_cards img{
+                width: 100%;
+                border-radius: 1%;
+            }
+
+        </style>
+
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% set bar = 0 %}
+        {% set car = 0 %}
+        {% set bar2 = 0 %}
+        {% set car2 = 0 %}
+        {% set bar3 = 0 %}
+        {% set car3 = 0 %}
+        {% set bar4 = 0 %}
+        {% set car4 = 0 %}
+        <div id="content" style="">
+
+            <div id="item_section">
+                <h>LATEST ITEMS</h>
+                <form name="new_gender" class="new_gender" id="new_gender" action="{{ path('new_items') }}" method="post">
+                    <input type="hidden" name="active_gender" id="active_gender" value="{{ active_gender }}">
+                    <input type="submit" class="female" name="female" id="female" onclick="active_female()" value="FEMALE">
+                    <input type="submit" class="male" name="male" id="male" onclick="active_male()" value="MALE">
+{#                </form>#}
+            <div id="item_rows" class="item_row">
+                {% set bar = 0 %}
+            {% for item in id %}
+                {% set car = car + bar %}
+                <a href="http://localhost:8000/clothes/{{ id[car] }}" style="text-decoration: none;">
+                    <div id="item_card" class="item_cards" style="">
+                        <img src="{{ absolute_url(asset(image[car])) }}" alt="Image Unavailable"/>
+                        <p>{{ name[car] }}</p>
+                        <p>£{{ price[car] }}</p>
+                {% set bar = 1 %}
+                    </div>
+
+                </a>
+            {% endfor %}
+
+            </div>
+                <h>LATEST HOODIES</h>
+{#                <form name="new_gender2" class="new_gender" id="new_gender2" action="{{ path('new_items') }}" method="post">#}
+                    <input type="hidden" name="active_gender2" id="active_gender2" value="{{ active_gender2 }}">
+                    <input type="submit" class="female" name="female2" id="female2" onclick="active_female2()" value="FEMALE">
+                    <input type="submit" class="male" name="male2" id="male2" onclick="active_male2()" value="MALE">
+{#                </form>#}
+                <div id="item_rows2" class="item_row">
+                    {% set bar2 = 0 %}
+                    {% for item in id2 %}
+                        {% set car2 = car2 + bar2 %}
+                        <a href="http://localhost:8000/clothes/{{ id2[car2] }}" style="text-decoration: none;">
+                            <div id="item_card2" class="item_cards" style="">
+                                <img src="{{ absolute_url(asset(image2[car2])) }}" alt="Image Unavailable"/>
+                                <p>{{ name2[car2] }}</p>
+                                <p>£{{ price2[car2] }}</p>
+                                {% set bar2 = 1 %}
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+
+                <h>LATEST FOOTWEAR</h>
+                {#                <form name="new_gender2" class="new_gender" id="new_gender2" action="{{ path('new_items') }}" method="post">#}
+                <input type="hidden" name="active_gender3" id="active_gender3" value="{{ active_gender3 }}">
+                <input type="submit" class="female" name="female3" id="female3" onclick="active_female3()" value="FEMALE">
+                <input type="submit" class="male" name="male3" id="male3" onclick="active_male3()" value="MALE">
+{#                </form>#}
+                <div id="item_rows3" class="item_row">
+                    {% set bar3 = 0 %}
+                    {% for item in id3 %}
+                        {% set car3 = car3 + bar3 %}
+                        <a href="http://localhost:8000/clothes/{{ id3[car3] }}" style="text-decoration: none;">
+                            <div id="item_card3" class="item_cards" style="">
+                                <img src="{{ absolute_url(asset(image3[car3])) }}" alt="Image Unavailable"/>
+                                <p>{{ name3[car3] }}</p>
+                                <p>£{{ price3[car3] }}</p>
+                                {% set bar3 = 1 %}
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+
+                <h>LATEST ACCESSORIES</h>
+                {#                <form name="new_gender2" class="new_gender" id="new_gender2" action="{{ path('new_items') }}" method="post">#}
+                <input type="hidden" name="active_gender4" id="active_gender4" value="{{ active_gender4 }}">
+                <input type="submit" class="female" name="female4" id="female4" onclick="active_female4()" value="FEMALE">
+                <input type="submit" class="male" name="male4" id="male4" onclick="active_male4()" value="MALE">
+                </form>
+                <div id="item_rows4" class="item_row">
+                    {% set bar4 = 0 %}
+                    {% for item in id4 %}
+                        {% set car4 = car4 + bar4 %}
+                        <a href="http://localhost:8000/clothes/{{ id4[car4] }}" style="text-decoration: none;">
+                            <div id="item_card4" class="item_cards" style="">
+                                <img src="{{ absolute_url(asset(image4[car4])) }}" alt="Image Unavailable"/>
+                                <p>{{ name4[car4] }}</p>
+                                <p>£{{ price4[car4] }}</p>
+                                {% set bar4 = 1 %}
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+
+        <script>
+            window.onload = function() {
+                activeGender();
+                activeGender2();
+                activeGender3();
+                activeGender4();
+            }
+
+            document.getElementById('male').onclick = function() {
+                const active = "{{ active_gender }}";
+                if(active === "MALE"){
+                    document.getElementById("male").value = "";
+                }
+            }
+            document.getElementById('female').onclick = function() {
+                const active = "{{ active_gender }}";
+                if(active === "FEMALE"){
+                    document.getElementById("female").value = "";
+                }
+            }
+
+            document.getElementById('male2').onclick = function() {
+                const active = "{{ active_gender2 }}";
+                if(active === "MALE"){
+                    document.getElementById("male2").value = "";
+                }
+            }
+            document.getElementById('female2').onclick = function() {
+                const active = "{{ active_gender2 }}";
+                if(active === "FEMALE"){
+                    document.getElementById("female2").value = "";
+                }
+            }
+
+            document.getElementById('male3').onclick = function() {
+                const active = "{{ active_gender3 }}";
+                if(active === "MALE"){
+                    document.getElementById("male3").value = "";
+                }
+            }
+            document.getElementById('female3').onclick = function() {
+                const active = "{{ active_gender3 }}";
+                if(active === "FEMALE"){
+                    document.getElementById("female3").value = "";
+                }
+            }
+
+            document.getElementById('male4').onclick = function() {
+                const active = "{{ active_gender4 }}";
+                if(active === "MALE"){
+                    document.getElementById("male4").value = "";
+                }
+            }
+            document.getElementById('female4').onclick = function() {
+                const active = "{{ active_gender4 }}";
+                if(active === "FEMALE"){
+                    document.getElementById("female4").value = "";
+                }
+            }
+
+            function activeGender(){
+                const active = "{{ active_gender }}";
+                if(active === "MALE" ){
+                    document.getElementById("male").style.background = "green";
+                    document.getElementById("male").style.color = "white";
+                }
+                if(active === "FEMALE" ){
+                    document.getElementById("female").style.background = "green";
+                    document.getElementById("female").style.color = "white";
+                }
+            }
+
+            function activeGender2(){
+                const active2 = "{{ active_gender2 }}";
+                if(active2 === "MALE" ){
+                    document.getElementById("male2").style.background = "green";
+                    document.getElementById("male2").style.color = "white";
+                }
+                if(active2 === "FEMALE" ){
+                    document.getElementById("female2").style.background = "green";
+                    document.getElementById("female2").style.color = "white";
+                }
+            }
+
+            function activeGender3(){
+                const active3 = "{{ active_gender3 }}";
+                if(active3 === "MALE" ){
+                    document.getElementById("male3").style.background = "green";
+                    document.getElementById("male3").style.color = "white";
+                }
+                if(active3 === "FEMALE" ){
+                    document.getElementById("female3").style.background = "green";
+                    document.getElementById("female3").style.color = "white";
+                }
+            }
+
+            function activeGender4(){
+                const active4 = "{{ active_gender4 }}";
+                if(active4 === "MALE" ){
+                    document.getElementById("male4").style.background = "green";
+                    document.getElementById("male4").style.color = "white";
+                }
+                if(active4 === "FEMALE" ){
+                    document.getElementById("female4").style.background = "green";
+                    document.getElementById("female4").style.color = "white";
+                }
+            }
+
+        </script>
+
+        {{ include('footer.html.twig') }}
+
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+    </body>
+</html>

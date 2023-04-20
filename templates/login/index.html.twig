@@ -1,0 +1,99 @@
+{#{% extends 'base.html.twig' %}#}
+
+{#{% block title %}Hello LoginController!{% endblock %}#}
+<title>{% block title %}Login{% endblock %}</title>
+<link rel="icon" href="{{ absolute_url(asset('images/favicon.ico')) }}" />
+<link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet'>
+{% block body %}
+{#    {% if error %}#}
+{#    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>#}
+{#    {% endif %}#}
+
+    <div id="main">
+
+        <div id="login">
+            <form action="{{ path('app_login') }}" method="post" style="text-align: center; ">
+                <h2>Login</h2>
+                <div id="username">
+    {#                <label for="username">Email:</label>#}
+                    <input type="text" id="username" name="_username" placeholder="Email">
+    {#                value="{{ last_username }}#}
+                </div>
+                <br>
+                <br>
+                <div id="password">
+    {#                <label for="password">Password:</label>#}
+                    <input type="password" id="password" name="_password" placeholder="Password">
+                </div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <br>
+                <button type="submit" style="margin: auto; display: block;">Login</button>
+            </form>
+
+            <h>Don't have an account?<br><a href="http://localhost:8000/register">REGISTER</a></h>
+
+        </div>
+
+    </div>
+<style>
+    body{
+        background: #008080;
+        font-family: 'Abel';font-size: 22px;
+    }
+
+    #main{
+        /*margin: auto;*/
+        /*justify-content: center;*/
+        display: block;
+        width: 100%;
+    }
+
+    a{
+        /*text-decoration: none;*/
+        color: black;
+    }
+
+    h{
+        text-align: center;
+        display: block;
+        font-size: 1.5rem;
+    }
+
+    h2{
+        padding: 3%;
+        color: black;
+        font-size: 4rem;
+    }
+
+    #login{
+        /*margin-top: 5%!important;*/
+        display: block;
+        border-radius: 5%;
+        border: 2px solid white;
+        width: 40%;
+        margin: auto;
+        background: white;
+
+    }
+
+    input{
+        border: 2px solid slategray;
+        border-radius: 2%;
+        /*padding-bottom: 2%!important;*/
+        font-family: 'Abel';font-size: 2rem;
+    }
+
+    button{
+        margin-top: 7%!important;
+        font-size: 2rem;
+        border-radius: 2%;
+        cursor: pointer;
+        padding: 2%;
+        background: #43d5b0;
+        border: #43d5b0;
+        color: white;
+    }
+
+</style>
+
+{% endblock %}

@@ -3,3 +3,11 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+home_page:
+    path: /
+    controller: App\Controller\DefaultController::homePage
+
+app_logout:
+    path: /logout
+    methods: GET

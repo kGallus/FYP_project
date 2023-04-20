@@ -1,0 +1,525 @@
+{{ include('base.html.twig') }}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Clothes{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+
+        <style>
+            #content{
+                width: 80%;
+                margin: auto;
+                justify-content: space-evenly;
+                display: flex;
+                border-top: 3px solid lightgray ;
+            }
+
+            #item_rows{
+                display: inline-flex;
+                flex-wrap: wrap;
+                justify-content: space-evenly;
+                width: 100%;
+            }
+
+            #item_rows a{
+                width:27%;
+                padding: 3%;
+            }
+
+            #item_card{
+            }
+
+            #item_card p{
+                color: black;
+                font-size: 1.5rem;
+
+            }
+
+            #item_card img{
+                width: 100%;
+                border-radius: 1%;
+            }
+
+        /*    -----------FILTER BAR-------------*/
+            #filter_bar{
+                width: 15%;
+                /*background: teal;*/
+            }
+
+            .column1{
+                width: 100%;
+                display: grid;
+                padding-bottom: 20%;
+                border-bottom: solid lightgray 1px ;
+            }
+
+            h3{
+                margin-bottom: 0%;
+            }
+
+            /* Hide the browser's default checkbox */
+            .column1 input {
+                opacity: 0;
+                cursor: pointer;
+                height: 0;
+                width: 0;
+            }
+
+            .container{
+                cursor: pointer;
+                padding: 2%;
+            }
+
+            .container p2{
+                vertical-align: middle;
+                margin: auto;
+                padding-left: 2%;
+                font-size: 1rem;
+            }
+
+            /* Create a custom checkbox */
+            .checkmark {
+                height: 1.2rem;
+                width: 1.2rem;
+                background-color: #eee;
+                display: inline-flex;
+                margin: auto;
+                border-radius: 50%;
+                vertical-align: middle;
+            }
+
+            /* On mouse-over, add a grey background color */
+            .container:hover input ~ .checkmark {
+                background-color: #ccc;
+            }
+
+            /* When the checkbox is checked, add a blue background */
+            .container input:checked ~ .checkmark {
+                background-color: #0cdb5e;
+            }
+
+            .container input:checked ~ .filter1 {
+                background-color: #0cdb5e;
+            }
+
+            #filter{
+                display: block;
+                /*margin: auto;*/
+                margin-top: 3%!important;
+                font-size: 2rem;
+                /*padding: 16%;*/
+                background: green;
+                border: green;
+                width: auto;
+                height: auto;
+                cursor: pointer;
+                border-radius: 4%;
+                color: white;
+                opacity: 1!important;
+            }
+
+            #order_tab{
+                width: 93.5%;
+                margin: auto;
+                border-bottom: 1px solid lightgray ;
+                display: inline-flex;
+            }
+
+            #sort_box{
+                /*display: block!important;*/
+                display:flex;
+                margin-right: auto;
+                /*float: left;*/
+                width: 34%
+            }
+
+            #sort_box p{
+                font-size: 1.2rem;
+            }
+
+            #sort {
+                /*opacity: 0;*/
+                cursor: pointer;
+                /*height: 0;*/
+                /*width: 0;*/
+                background: none;
+                border: none;
+                font-family: 'Abel';font-size: 1.2rem;
+                width: 100%;
+            }
+
+            .dropdown1{
+                width: 38%;
+                overflow: hidden;
+            }
+
+            .dropdown_content1{
+                display: none;
+                background: white;
+                z-index: 1;
+                position: absolute;
+                width:8%;
+            }
+
+            .dropdown1:hover .dropdown_content1 {display: block}
+
+            .column2{
+            }
+
+            .column2 a{
+                float: none;
+                color: black;
+                text-decoration: none;
+                display: block;
+                text-align: left;
+                font-weight: normal!important;
+            }
+
+            .column2 input:hover{
+                background: lightgray!important;
+            }
+
+            .column2 a:hover{
+                background-color:lightgray;
+            }
+
+        </style>
+
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% set bar = 0 %}
+        {% set car = 0+bar %}
+        <div id="content" style="">
+            <div id="filter_bar">
+                <div class = "row1">
+                    <form name="filtering" action="{{ path('show_gender', { 'gender': gender }) }}" method="post" style="display: grid;">
+                        <div class = "column1">
+                            <h3>Brand</h3>
+                            <label class="container">
+                                <input type="checkbox" id="nike_check" name="brand_check[]" value="NIKE">
+                                <span class="checkmark"></span><p2>NIKE</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="adidas_check" name="brand_check[]" value="ADIDAS">
+                                <span class="checkmark" ></span><p2>ADIDAS</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="puma_check" name="brand_check[]" value="PUMA">
+                                <span class="checkmark"></span><p2>PUMA</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="north_check" name="brand_check[]" value="NORTH FACE">
+                                <span class="checkmark"></span><p2>NORTH FACE</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="ea7_check" name="brand_check[]" value="EA7">
+                                <span class="checkmark"></span><p2>EA7</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="jordan_check" name="brand_check[]" value="JORDAN">
+                                <span class="checkmark"></span><p2>JORDAN</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="under_check" name="brand_check[]" value="UNDER ARMOUR">
+                                <span class="checkmark"></span><p2>UNDER ARMOUR</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="hoodrich_check" name="brand_check[]" value="HOODRICH">
+                                <span class="checkmark"></span><p2>HOODRICH</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="lacoste_check" name="brand_check[]" value="LACOSTE">
+                                <span class="checkmark"></span><p2>LACOSTE</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="balance_check" name="brand_check[]" value="NEW BALANCE">
+                                <span class="checkmark"></span><p2>NEW BALANCE</p2>
+                            </label>
+                        </div>
+
+
+                        <div class = "column1">
+                            <h3>Colour</h3>
+                            <label class="container">
+                                <input type="checkbox" id="red_check" name="colour_check[]" value="RED">
+                                <span class="checkmark"></span><p2>RED</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="blue_check" name="colour_check[]" value="BLUE">
+                                <span class="checkmark" ></span><p2>BLUE</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="green_check" name="colour_check[]" value="GREEN">
+                                <span class="checkmark"></span><p2>GREEN</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="black_check" name="colour_check[]" value="BLACK">
+                                <span class="checkmark"></span><p2>BLACK</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="white_check" name="colour_check[]" value="WHITE">
+                                <span class="checkmark"></span><p2>WHITE</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="orange_check" name="colour_check[]" value="ORANGE">
+                                <span class="checkmark"></span><p2>ORANGE</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="yellow_check" name="colour_check[]" value="YELLOW">
+                                <span class="checkmark"></span><p2>YELLOW</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="purple_check" name="colour_check[]" value="PURPLE">
+                                <span class="checkmark"></span><p2>PURPLE</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="pink_check" name="colour_check[]" value="PINK">
+                                <span class="checkmark"></span><p2>PINK</p2>
+                            </label>
+                        </div>
+
+                        <div class = "column1">
+                            <h3>Type</h3>
+                            <label class="container">
+                                <input type="checkbox" id="hoodies_check" name="type_check[]" value="HOODIE">
+                                <span class="checkmark"></span><p2>HOODIES</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="tShirts_check" name="type_check[]" value="T-SHIRT">
+                                <span class="checkmark" ></span><p2>T-SHIRTS</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="tracksuits_check" name="type_check[]" value="TRACKSUIT">
+                                <span class="checkmark"></span><p2>TRACKSUITS</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="shorts_check" name="type_check[]" value="SHORTS">
+                                <span class="checkmark"></span><p2>SHORTS</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="trainers_check" name="type_check[]" value="TRAINERS">
+                                <span class="checkmark"></span><p2>TRAINERS</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="hiTops_check" name="type_check[]" value="HI-TOPS">
+                                <span class="checkmark"></span><p2>HI-TOPS</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="running_check" name="type_check[]" value="RUNNING SHOES">
+                                <span class="checkmark"></span><p2>RUNNING SHOES</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="boots_check" name="type_check[]" value="FOOTBALL BOOTS">
+                                <span class="checkmark"></span><p2>FOOTBALL BOOTS</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="underwear_check" name="type_check[]" value="UNDERWEAR">
+                                <span class="checkmark"></span><p2>UNDERWEAR</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="socks_check" name="type_check[]" value="SOCKS">
+                                <span class="checkmark"></span><p2>SOCKS</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="caps_check" name="type_check[]" value="CAPS">
+                                <span class="checkmark"></span><p2>CAPS</p2>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox" id="sunglasses_check" name="type_check[]" value="SUNGLASSES">
+                                <span class="checkmark"></span><p2>SUNGLASSES</p2>
+                            </label>
+                        </div>
+                        <input type="submit" name="filter" id="filter" value="SEARCH">
+
+{#                    </form>#}
+
+                </div>
+
+
+            </div>
+
+            <div id="item_section">
+            <div id="order_tab">
+                <div id="sort_box">
+                    {#                    <form name="sorting" action="{{ path('all_items') }}" method="post" style="display: inline-flex; width: 100%;">#}
+                    <p style="width: 17%; padding-top: 1.5%;">Sort By</p>
+                    <div class="dropdown1">
+                        <p style="border: solid 1px lightgray; cursor: pointer; text-align: center; padding: 3%;">{{ active_sort }}</p>
+                        <div class="dropdown_content1">
+                            <div class = "column2">
+                                <input type="submit" name="sort" id="sort" value="Recommended">
+                                <input type="submit" name="sort" id="sort" value="Name(A-Z)">
+                                <input type="submit" name="sort" id="sort" value="Name(Z-A)">
+                                <input type="submit" name="sort" id="sort" value="Price(High-Low)">
+                                <input type="submit" name="sort" id="sort" value="Price(Low-High)">
+                                <input type="hidden" name="sort_state" id="sort" value="{{ active_sort }}">
+                                {#                                    {% if active_filters != empty %}#}
+                                {#                                        <input type="hidden" name="filter_state[]" id="sort" value="HOODIES">#}
+                                {#                                        <input type="hidden" name="filter_state[]" id="sort" value="{{ active_filters[0] }}">#}
+                                {#                                    {% endif %}#}
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+
+                <div id="item_num">
+                    <p>{{ item_num }} Products</p>
+                </div>
+
+            </div>
+            <div id="item_rows">
+            {% for item in id %}
+                {% set car = car + bar %}
+                <a href="http://localhost:8000/clothes/{{ id[car] }}" style="text-decoration: none;">
+                    <div id="item_card" style="">
+                        <img src="{{ absolute_url(asset(image[car])) }}" alt="Image Unavailable"/>
+                        <p>{{ name[car] }}</p>
+                        <p>£{{ price[car] }}</p>
+                {% set bar = 1 %}
+                    </div>
+
+                </a>
+            {% endfor %}
+                {% if bar == 0 %}
+                    <p>We are sorry but we do not have any items which match this criteria, Try searching for something else or Contact Support</p>
+                {% endif %}
+            </div>
+        </div>
+        </div>
+
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+        {% set bars = 0 %}
+        {% set cars = 0 %}
+        <script>
+            window.onload = function() {
+                showFilters();
+            }
+
+            function showFilters(){
+                const num_filters = {{ filter_num }};
+                const filters = [];
+                if(num_filters > 0){
+                    {% for item in active_filters %}
+                    {% set cars = cars+bars %}
+                    filters.push("{{ active_filters[cars] }}");
+                    {% set bars = 1 %}
+                    {% endfor %}
+                    // window.alert("found filters");
+                }else{
+                    // window.alert("no filters");
+                }
+                filters.forEach(turnGreen);
+            }
+
+            function turnGreen(filters){
+                if(filters.includes("NIKE")){
+                    document.getElementById("nike_check").checked = true;
+                }
+                if(filters.includes("ADIDAS")){
+                    document.getElementById("adidas_check").checked = true;
+                }
+                if(filters.includes("PUMA")){
+                    document.getElementById("puma_check").checked = true;
+                }
+                if(filters.includes("NORTH FACE")){
+                    document.getElementById("north_check").checked = true;
+                }
+                if(filters.includes("EA7")){
+                    document.getElementById("ea7_check").checked = true;
+                }
+                if(filters.includes("JORDAN")){
+                    document.getElementById("jordan_check").checked = true;
+                }
+                if(filters.includes("UNDER ARMOUR")){
+                    document.getElementById("under_check").checked = true;
+                }
+                if(filters.includes("HOODRICH")){
+                    document.getElementById("hoodrich_check").checked = true;
+                }
+                if(filters.includes("LACOSTE")){
+                    document.getElementById("lacoste_check").checked = true;
+                }
+                if(filters.includes("NEW BALANCE")){
+                    document.getElementById("balance_check").checked = true;
+                }
+                if(filters.includes("RED")){
+                    document.getElementById("red_check").checked = true;
+                }
+                if(filters.includes("BLUE")){
+                    document.getElementById("blue_check").checked = true;
+                }
+                if(filters.includes("GREEN")){
+                    document.getElementById("green_check").checked = true;
+                }
+                if(filters.includes("BLACK")){
+                    document.getElementById("black_check").checked = true;
+                }
+                if(filters.includes("WHITE")){
+                    document.getElementById("white_check").checked = true;
+                }
+                if(filters.includes("ORANGE")){
+                    document.getElementById("orange_check").checked = true;
+                }
+                if(filters.includes("YELLOW")){
+                    document.getElementById("yellow_check").checked = true;
+                }
+                if(filters.includes("PURPLE")){
+                    document.getElementById("purple_check").checked = true;
+                }
+                if(filters.includes("PINK")){
+                    document.getElementById("pink_check").checked = true;
+                }
+                if(filters.includes("HOODIE")){
+                    document.getElementById("hoodies_check").checked = true;
+                }
+                if(filters.includes("T-SHIRT")){
+                    document.getElementById("tShirts_check").checked = true;
+                }
+                if(filters.includes("TRACKSUIT")){
+                    document.getElementById("tracksuits_check").checked = true;
+                }
+                if(filters.includes("SHORTS")){
+                    document.getElementById("shorts_check").checked = true;
+                }
+                if(filters.includes("TRAINERS")){
+                    document.getElementById("trainers_check").checked = true;
+                }
+                if(filters.includes("HI-TOPS")){
+                    document.getElementById("hiTops_check").checked = true;
+                }
+                if(filters.includes("RUNNING SHOES")){
+                    document.getElementById("running_check").checked = true;
+                }
+                if(filters.includes("FOOTBALL BOOTS")){
+                    document.getElementById("boots_check").checked = true;
+                }
+                if(filters.includes("UNDERWEAR")){
+                    document.getElementById("underwear_check").checked = true;
+                }
+                if(filters.includes("SOCKS")){
+                    document.getElementById("socks_check").checked = true;
+                }
+                if(filters.includes("CAPS")){
+                    document.getElementById("caps_check").checked = true;
+                }
+                if(filters.includes("SUNGLASSES")){
+                    document.getElementById("sunglasses_check").checked = true;
+                }
+            }
+
+        </script>
+        {{ include('footer.html.twig') }}
+
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+    </body>
+</html>

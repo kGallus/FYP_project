@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+{#        <title>{% block title %}Welcome!{% endblock %}</title>#}
+        <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet'>
+        <link rel="icon" href="{{ absolute_url(asset('images/favicon.ico')) }}" />
+        <script src="https://kit.fontawesome.com/678bd8a445.js" crossorigin="anonymous"></script>
+        <style>
+            body{
+                margin: 0;
+                /*font-family: 'Courier New', monospace;*/
+                /*font-family: Garamond, serif;*/
+                /*font-family: Georgia, serif;*/
+                font-family: 'Abel';font-size: 22px;
+            }
+
+            #nav_bar{
+                width: 100%;
+                top:0px;
+                margin:auto;
+                text-align: right;
+                background: #000;
+            }
+
+            #nav_bar ul{
+                margin-top:0px;
+                width: 90%;
+                display:flex;
+                justify-content: space-around;
+                margin: auto;
+                padding: 0;
+            }
+
+            #nav_bar li{
+                list-style-type: none;
+                text-decoration: none;
+                display: inline-flex;
+                padding: 1%;
+                vertical-align: middle;
+                margin: auto;
+            }
+
+            #main_nav{
+                width: 70%;
+                margin: auto;
+            }
+
+            #main_nav ul{
+                justify-content: space-evenly;
+                display: flex;
+
+            }
+
+            #main_nav li{
+                display: inline-flex;
+            }
+
+            #main_nav a{
+                list-style-type: none;
+                text-decoration: none;
+                color: black;
+                font-size: 1.5rem;
+                font-weight: bold;
+            }
+
+            li a{
+                text-decoration: none;
+                color: white;
+            }
+
+            .dropdown{
+                /*position: relative;*/
+                /*display: inline-block;*/
+                /*padding: 10%;*/
+                float: left;
+                overflow: hidden;
+            }
+
+            .dropdown_content{
+                display: none;
+                width: 90%;
+                left:5%;
+                /*padding: 4%;*/
+                position: absolute;
+                background: white;
+                z-index: 1;
+            }
+
+            .dropdown_content a{
+                display: block;
+                padding: 5%;
+                padding-left: 0;
+            }
+
+            .dropdown:hover .dropdown_content {display: block}
+
+            .column{
+                float: left;
+                width:20%;
+                padding: 10px;
+                /*height: 250px;*/
+            }
+
+            .column a{
+                float: none;
+                color: black;
+                text-decoration: none;
+                display: block;
+                text-align: left;
+                font-weight: normal!important;
+            }
+
+            .column a:hover{
+                background-color:lightgray;
+            }
+
+            .row:after{
+                content: "";
+                display: table;
+                clear: both;
+            }
+
+        </style>
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+{#        {% block stylesheets %}#}
+{#            {{ encore_entry_link_tags('app') }}#}
+{#        {% endblock %}#}
+
+
+        <nav id="nav_bar">
+            <ul>
+                <li>
+                    <a href="{{ path('show_cart') }}"><i class="fa-solid fa-cart-shopping" style="font-size: 2rem; color: white;"></i></a>
+                </li>
+                    <li style="width: 90%">
+                        <a href="http://localhost:8000/" style="width: 25%; margin:auto; display: block!important;"><img style="width:100%;" src="{{ absolute_url(asset('images/kUNDISPUTEDg.png')) }}" alt="Image Unavailable"/></a>
+                    </li><br>
+                {% if is_granted('ROLE_USER') == false %}
+
+                    <li>
+                        <a href="http://localhost:8000/login" style=" margin-left: auto;"><i class="fa-regular fa-user" style="font-size: 2rem; color: white;"></i></a>
+                    </li>
+                {% endif %}
+
+                {% if is_granted('ROLE_USER') %}
+{#                    <li>#}
+{#                        <a href="{{ path('show_cart') }}"><i class="fa-solid fa-cart-shopping" style="font-size: 2rem; color: white;"></i></a>#}
+{#                    </li>#}
+
+                    <li>
+                        <a href="{{ path('app_logout') }}"><i class="fa-solid fa-arrow-right-from-bracket" style="font-size: 2rem; color: white;"></i></a>
+                    </li>
+
+                {% endif %}
+
+
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li>
+                        <a href="http://localhost:8000/addCollection">Collections</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:8000/addImages">Add</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:8000/AdminAllClothes">View</a>
+                    </li>
+
+                {% endif %}
+
+            </ul>
+        </nav>
+
+        <nav id="main_nav">
+            <ul>
+
+                <li>
+                    <div class="dropdown">
+                        <a href="http://localhost:8000/Clothing/{{ 'MALE' }}">Men</a>
+{#                        <a href="{{ path('home_page') }}">Men</a>#}
+                        <div class="dropdown_content">
+                            <div class = "row">
+                                <div class = "column">
+{#                                    <a href="" style="font-weight: bold!important; padding: 0;">#}
+                                    <h3>Clothing</h3>
+{#                                    <a style="font-weight: bold; font-size: 1.17em;" href="http://localhost:8000/Clothing/">Clothing</a>#}
+                                    <a href="http://localhost:8000/Clothing/{{ 'MALE' }}/{{ 'HOODIE' }}"><p5>Hoodies</p5></a>
+                                    <a href="http://localhost:8000/Clothing/{{ 'MALE' }}/{{ 'T-SHIRT' }}"><p5>T-Shirts</p5></a>
+                                    <a href="http://localhost:8000/Clothing/{{ 'MALE' }}/{{ 'TRACKSUIT' }}"><p5>Tracksuits</p5></a>
+                                    <a href="http://localhost:8000/Clothing/{{ 'MALE' }}/{{ 'SHORTS' }}"><p5>Shorts</p5></a>
+                                </div>
+                                <div class = "column">
+                                    <h3>Footwear</h3>
+                                    <a href="http://localhost:8000/Clothing/{{ 'MALE' }}/{{ 'TRAINERS' }}"><p5>Trainers</p5></a>
+                                    <a href="http://localhost:8000/Clothing/{{ 'MALE' }}/{{ 'HI-TOPS' }}"><p5>Hi-Tops</p5></a>
+                                    <a href="http://localhost:8000/Clothing/{{ 'MALE' }}/{{ 'RUNNING SHOES' }}"><p5>Running Shoes</p5></a>
+                                    <a href="http://localhost:8000/Clothing/{{ 'MALE' }}/{{ 'FOOTBALL BOOTS' }}"><p5>Football Boots</p5></a>
+                                </div>
+                                <div class = "column">
+                                    <h3>Accessories</h3>
+                                    <a href="http://localhost:8000/Clothing/{{ 'MALE' }}/{{ 'UNDERWEAR' }}"><p5>Underwear</p5></a>
+                                    <a href="http://localhost:8000/Clothing/{{ 'MALE' }}/{{ 'SOCKS' }}"><p5>Socks</p5></a>
+                                    <a href="http://localhost:8000/Clothing/{{ 'MALE' }}/{{ 'CAPS' }}"><p5>Caps</p5></a>
+                                    <a href="http://localhost:8000/Clothing/{{ 'MALE' }}/{{ 'SUNGLASSES' }}"><p5>Sunglasses</p5></a>
+                                </div>
+                                <div class="column" style="float:right; width: 34%; margin-top: 25.70px;">
+                                    <img style="width:100%;" src="{{ absolute_url(asset('images/summer_sale.jpg')) }}" alt="Image Unavailable"/>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="dropdown">
+                        <a href="http://localhost:8000/Clothing/{{ 'FEMALE' }}">Women</a>
+                        <div class="dropdown_content">
+                            <div class = "row">
+                                <div class = "column">
+                                    <h3>Clothing</h3>
+                                    <a href="http://localhost:8000/Clothing/{{ 'FEMALE' }}/{{ 'HOODIE' }}"><p5>Hoodies</p5></a>
+                                    <a href="http://localhost:8000/Clothing/{{ 'FEMALE' }}/{{ 'T-SHIRT' }}"><p5>T-Shirts</p5></a>
+                                    <a href="http://localhost:8000/Clothing/{{ 'FEMALE' }}/{{ 'TRACKSUIT' }}"><p5>Tracksuits</p5></a>
+                                    <a href="http://localhost:8000/Clothing/{{ 'FEMALE' }}/{{ 'SHORTS' }}"><p5>Shorts</p5></a>
+                                </div>
+                                <div class = "column">
+                                    <h3>Footwear</h3>
+                                    <a href="http://localhost:8000/Clothing/{{ 'FEMALE' }}/{{ 'TRAINERS' }}"><p5>Trainers</p5></a>
+                                    <a href="http://localhost:8000/Clothing/{{ 'FEMALE' }}/{{ 'HI-TOPS' }}"><p5>Hi-Tops</p5></a>
+                                    <a href="http://localhost:8000/Clothing/{{ 'FEMALE' }}/{{ 'RUNNING SHOES' }}"><p5>Running Shoes</p5></a>
+                                    <a href="http://localhost:8000/Clothing/{{ 'FEMALE' }}/{{ 'FOOTBALL BOOTS' }}"><p5>Football Boots</p5></a>
+                                </div>
+                                <div class = "column">
+                                    <h3>Accessories</h3>
+                                    <a href="http://localhost:8000/Clothing/{{ 'FEMALE' }}/{{ 'UNDERWEAR' }}"><p5>Underwear</p5></a>
+                                    <a href="http://localhost:8000/Clothing/{{ 'FEMALE' }}/{{ 'SOCKS' }}"><p5>Socks</p5></a>
+                                    <a href="http://localhost:8000/Clothing/{{ 'FEMALE' }}/{{ 'CAPS' }}"><p5>Caps</p5></a>
+                                    <a href="http://localhost:8000/Clothing/{{ 'FEMALE' }}/{{ 'SUNGLASSES' }}"><p5>Sunglasses</p5></a>
+                                </div>
+                                <div class="column" style="float:right; width: 34%; margin-top: 25.70px;">
+                                    <img style="width:100%;" src="{{ absolute_url(asset('images/summer_sale.jpg')) }}" alt="Image Unavailable"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="dropdown">
+                        <a href="{{ path('all_items') }}">Clothes</a>
+                        <div class="dropdown_content">
+                            <div class = "row">
+                                <div class = "column">
+                                    <h3>Clothing</h3>
+                                    <a href="#"><p5>Hoodies</p5></a>
+                                    <a href="#"><p5>T-Shirts</p5></a>
+                                    <a href="#"><p5>Tracksuits</p5></a>
+                                    <a href="#"><p5>Shorts</p5></a>
+                                </div>
+                                <div class = "column">
+                                    <h3>Footwear</h3>
+                                    <a href="#"><p5>Trainers</p5></a>
+                                    <a href="#"><p5>Hi-Tops</p5></a>
+                                    <a href="#"><p5>Running Shoes</p5></a>
+                                    <a href="#"><p5>Football Boots</p5></a>
+                                </div>
+                                <div class = "column">
+                                    <h3>Accessories</h3>
+                                    <a href="#"><p5>Underwear</p5></a>
+                                    <a href="#"><p5>Socks</p5></a>
+                                    <a href="#"><p5>Caps</p5></a>
+                                    <a href="#"><p5>Sunglasses</p5></a>
+                                </div>
+                                <div class="column" style="float:right; width: 33%; margin-top: 25.70px;">
+                                    <img style="width:100%;" src="{{ absolute_url(asset('images/summer_sale.jpg')) }}" alt="Image Unavailable"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <a href="{{ path('new_items') }}">New</a>
+                </li>
+
+                <li>
+                    <a href="http://localhost:8000/Clothing/Footwear/Shoes/{{ 'FOOTWEAR' }}">Shoes</a>
+                </li>
+
+
+            </ul>
+        </nav>
+
+{#        <form id="userSearch"  name="FORM" method="post" style="">#}
+{#            <input id="search" name="ANSWER" type="text" placeholder="Search" onkeyup="showHint(this.value)" autocomplete="off">#}
+{#        </form>#}
+
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+    </body>
+
+<script>
+    // function showHint(str){
+    //     if(str.length == 0){
+    //         document.getElementById("txtHint").innerHTML ="";
+    //         document.getElementById("all_items").style.zIndex = "5";
+    //         return;
+    //     }else{
+    //         var xmlhttp = new XMLHttpRequest();
+    //         xmlhttp.onreadystatechange = function(){
+    //             if(this.readyState ==4 && this.status == 200){
+    //                 var uic = document.getElementById("txthint")
+    //                 uic.innerHTML=this.responseText;
+    //                 if(this.responce != "No Suggestions"){
+    //                     uic.innerHTML = "";
+    //                     window.alert(this.responseText);
+    //                     var items = JSON.parse(this.responseText);
+    //                     items.forEach(function (obj){
+    //                         uic.innerHTML +="<a id='searc_cards' href='http://localhost:8000/clothes/"+ obj.attribute3 +"'>" +
+    //                             "<span id='search_result'>" +
+    //                             "<div id='search_img' src=' images/" + obj.attribute2 + "'></div>" + "<div id='search_name' style='margin: auto' >" + obj.attribute1 + "</div></a></span>";
+    //                     });
+    //                 }
+    //                 document.getElementById("all_users").style.zIndex = "-1";
+    //             }
+    //         };
+    //         // Route::get('reg_validation', 'DefaultController@homePage');
+    //         // xmlhttp.open("GET", "DefaultController.php?q=" + str, true);
+    //         xmlhttp.open("GET", "", true);
+    //         xmlhttp.send();
+    //     }
+    // }
+
+</script>
+
+</html>
